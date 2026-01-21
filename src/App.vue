@@ -1,12 +1,11 @@
 <template>
-  <header class="w-full"  >
-     <div class="bg-purple-300 ">
-      <h1>Mi Página Web</h1>
+ <header class="w-full  p-4 flex flex-col md:flex-row justify-between items-center">
 
-      <nav class="bg-purple-300">
-        <ol class="flex gap-6">
-          <li><router-link to="/juegos" class="text-blue-600 hoever:text-blue-800">Juegos</router-link></li> 
-          <li><router-link to="/eventos" class="text-blue-600 hoever:text-blue-800">Eventos</router-link></li>
+     <div class="w-full ">
+      <nav class="bg-purple-300  w-full p-4 flex flex-col md:flex-row justify-between items-center">
+        <ol class="flex gap-6 ">
+          <li><router-link to="/juegos" class="text-blue-500 hover:text-blue-800 ">Juegos</router-link></li> 
+          <li><router-link to="/eventos" class="text-blue-500 hover:text-blue-800">Eventos</router-link></li>
         </ol>
       </nav>
 
@@ -16,7 +15,8 @@
 </template>
 
 <script>
-import Juegos from './components/Juegos.vue';
+
+
 
 </script>
 

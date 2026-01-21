@@ -1,6 +1,5 @@
 <template>
     <div>
-        
         <select v-model="genero" @change="cargarJuegos">
             <option value="">Todos los generos</option>
             <option value="Sandbox">Sandbox</option>
@@ -13,9 +12,16 @@
             <option value="RPG de acción">RPG de acción</option>    
         </select>
 
+        <select v-model="plataforma" @change="cargarJuegos">
+            <option value="">Todas las plataformas</option>
+            <option value='PC'>Ordenador</option>
+            <option value="Consolas">Consola</option>
+            <option value="Móviles">Móvil</option>    
+        </select>
+
         <ul>
             <li v-for="juego in juegos" :key="juego.id">
-            {{ juego.titulo }} — {{ juego.genero }} - {{ juego.plataforma }}
+            {{ juego.titulo }} — {{ juego.genero }} - {{ juego.plataformas }} - {{ juego.imagen }} - {{ juego.descripcion }}
             </li>
         </ul>
     </div>
@@ -29,7 +35,7 @@ import { ref, onMounted } from 'vue'
 
 const juegos = ref([])
 const genero = ref('')
-
+const plataforma = ref('')
 
 async function cargarJuegos() {
   const params = new URLSearchParams()
@@ -39,6 +45,9 @@ async function cargarJuegos() {
     params.append('genero', genero.value)
   }
 
+    if (plataforma.value) {
+    params.append('plataformas', plataforma.value)
+  }
 
   const res = await fetch(`/api/juegos_api.php?${params.toString()}`)
   juegos.value = await res.json()
