@@ -2,22 +2,23 @@
   <div class="fondo">
   <div class="min-h-screen flex flex-col w-screen">
 
+
     <header class="w-full px-[20px]">
      
       <nav class="fixed top-5 left-1/2 -translate-x-1/2 w-[calc(100%-40px)] border rounded-full p-5 flex justify-end px-6 px-60">
-      
+     
         <router-link to="/principal">
-         <img src="../img/videojuego.png" alt="videojuego" class="h-14 w-auto " >  
+         <img src="../img/videojuego.png" alt="videojuego" class="h-14 w-auto">  
       </router-link>
        
-      <h1 class="text-white flex flex-col ms-5 my-auto ">
+      <h1 class="text-white flex flex-col ms-5 my-auto text-3xl font-bold ">
         ElorrietaFest</h1>
      
         <ol class="flex gap-6 ms-auto my-auto ">
           <li>
             <router-link
               to="/juegos"
-              class="bg-orange-300 rounded p-3 hover:text-orange-500"
+              class="bg-orange-300 rounded p-3 hover:text-orange-800 nav-link"
             >
               Juegos
             </router-link>
@@ -25,7 +26,7 @@
           <li>
             <router-link
               to="/eventos"
-              class="bg-orange-300 rounded p-3 hover:text-orange-800"
+              class="bg-orange-300 rounded p-3 hover:text-orange-800 nav-link"
             >
               Eventos
             </router-link>
@@ -34,19 +35,25 @@
       </nav>
     </header>
 
- 
+
+  
     <main class="flex-grow">
+
+
 
 
       <router-view />
     </main>
+
 
     <footer class="h-[100px] p-5 bg-gray-500 flex ">
       <div>
         <img src="../img/videojuego.png" alt="videojuego" class="h-14 w-auto  " >  
       </div>
 
+
       <div class="flex flex-col my-auto ms-auto">
+
 
           <h3 class="mb-2 m-auto">Enlaces</h3>
           <div>
@@ -54,7 +61,7 @@
               <li>
                 <router-link
                   to="/juegos"
-                  
+                 
                 >
                   Juegos
                 </router-link>
@@ -80,27 +87,41 @@
         </div>
     </footer>
 
+
   </div>
   </div>
 </template>
 
+
 <script setup>
+
 
 </script>
 
+
 <style>
 
+
 .fondo {
-  background-image: url('../img/azulFondo.png');
-  background-size: cover; 
+  /* background-image: url('../img/azulFondo.png'); */
+  background-size: cover;
   background-position: center;
 }
   nav {
     background: linear-gradient(to right, var(--color-blue-500), var(--color-purple-400));
   }
 
+
   footer {
     background: linear-gradient(to right, var(--color-blue-500), var(--color-purple-400));
   }
 
+
+
+
+
+
 </style>
+
+
+

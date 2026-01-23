@@ -1,60 +1,41 @@
 <template class="m-0">
     <div class="justify-center flex flex-col items-center min-h-screen space-y-4">
-        <select v-model="genero" @change="cargarJuegos" >
-            <option value="">Todos los generos</option>
-            <option value="Sandbox">Sandbox</option>
-            <option value="Battle Royale">Battle Royal</option>
-            <option value="MOBA">MOBA</option>
-            <option value="Shooter táctico">Shooter táctico</option>
-            <option value="Shooter competitivo">Shooter competitivo</option>
-            <option value="Shooter">Shooter</option>
-            <option value="Acción / Looter Shooter">Acción / Looter Shooter</option>
-            <option value="RPG de acción">RPG de acción</option>    
-        </select>
+       <div>
+            <input type="text" v-model="busqueda" placeholder="Buscar juego..." class="border p-2 rounded w-80">
+       </div>
+       <ul class="space-y-2 w-full max-w-xl">
+        <li v-for="juego in juegos"  :key="juego.id" class="border p-2 rounded">
+            {{ juego.titulo }} - {{ juego.genero }} - {{ juego.plataformas }}
+        </li>
 
-        <select v-model="plataforma" @change="cargarJuegos">
-            <option value="">Todas las plataformas</option>
-            <option value='PC'>Ordenador</option>
-            <option value="Consolas">Consola</option>
-            <option value="Móviles">Móvil</option>    
-        </select>
-
-        <ul>
-            <li v-for="juego in juegos" :key="juego.id">
-            {{ juego.titulo }} — {{ juego.genero }} - {{ juego.plataformas }} - {{ juego.imagen }} - {{ juego.descripcion }}
-            </li>
-        </ul>
+       </ul>
     </div>
 </template>
 
 
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 
 
 const juegos = ref([])
-const genero = ref('')
-const plataforma = ref('')
+const busqueda = ref('')
 
 async function cargarJuegos() {
-  const params = new URLSearchParams()
-
-
-  if (genero.value) {
-    params.append('genero', genero.value)
-  }
-
-    if (plataforma.value) {
-    params.append('plataformas', plataforma.value)
-  }
-
-  const res = await fetch(`/api/juegos_api.php?${params.toString()}`)
+  const res = await fetch('/api/juegos_api.php')
   juegos.value = await res.json()
+
 }
 
+const juegosFiltrados = computed(() => {
 
+    const query = busqueda.value.trim().toLowerCase()
+
+    if(!query) return juegos.value
+})
 onMounted(cargarJuegos)
+
+
 </script>
 
 
