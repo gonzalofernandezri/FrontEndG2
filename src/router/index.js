@@ -5,7 +5,7 @@ import Eventos from '../components/Eventos.vue'
 const routes = [
   {
     path: '/',
-    redirect: '/juegos'
+    redirect: '/principal'
   },
   {
     path: '/juegos',
