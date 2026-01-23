@@ -7,7 +7,7 @@ import Usuarios from '../components/Usuarios.vue'
 const routes = [
   {
     path: '/',
-    redirect: '/juegos'
+    redirect: '/principal'
   },
   {
     path: '/juegos',

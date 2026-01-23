@@ -1,11 +1,11 @@
 <template>
-    <div>
-        <h1>EVENTOS</h1>
+    <div >
+  
     </div>
 </template>
 
-<script>
-    export default {
+<script setup>
+    
         name: "Eventos"
-    }
+    
 </script>
