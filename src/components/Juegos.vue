@@ -10,7 +10,7 @@
                     <img :src="'../../gamefest_resources/games/'+ juego.imagen" :alt="'Imagen de ' + juego.titulo"  class="w-full h-40 object-cover rounded" @click="abrirModal('../../gamefest_resources/games/'+ juego.imagen)">
                 </div>
                 <h3 class="font-sans md:font-serif ">Titulo: {{ juego.titulo }}</h3>
-                <p class="font-sans md:font-serif">Plataforma: {{ juego.plataformas }}  </p>   
+                <p class="font-sans md:font-serif">Plataforma: {{ JSON.parse(juego.plataformas).join(', ') }}  </p>   
                 <p class="font-sans md:font-serif">Género: {{ juego.genero }} </p>
                 <p class="font-sans md:font-serif">Descripcón: {{ juego.descripcion }}</p>    
             </li>
