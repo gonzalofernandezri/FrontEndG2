@@ -45,8 +45,8 @@
       <footer class="h-[100px] p-5 bg-gray-500 flex">
         <div>
           <img
-            src="../img/videojuego.png"
-            alt="videojuego"
+            src="../img/ElorrietaFest.png"
+            alt="ElorrietaFest  "
             class="h-14 w-auto"
           />
         </div>
