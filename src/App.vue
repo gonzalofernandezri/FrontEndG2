@@ -34,6 +34,22 @@
                 Eventos
               </router-link>
             </li>
+                        <li>
+              <router-link
+                to="/login"
+                class="bg-orange-300 rounded p-3 hover:text-orange-800 nav-link"
+              >
+                Login
+              </router-link>
+            </li>
+            <li>
+              <router-link
+                to="/usuarios"
+                class="bg-orange-300 rounded p-3 hover:text-orange-800 nav-link"
+              >
+                Usuarios
+              </router-link>
+            </li>
           </ol>
         </nav>
       </header>
@@ -61,6 +77,13 @@
               <li>
                 <router-link to="/eventos"> Eventos </router-link>
               </li>
+              <li>
+                <router-link to="/login"> Login </router-link>
+              </li>
+              <li>
+                <router-link to="/usuarios"> Usuarios </router-link>
+              </li>
+
             </ol>
           </div>
         </div>

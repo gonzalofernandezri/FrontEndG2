@@ -11,6 +11,7 @@ export default defineConfig({
     tailwindcss(),
     vue(),
     vueDevTools(),
+    
   ],
   server: {
 proxy: {
@@ -30,3 +31,4 @@ proxy: {
     },
   },
 })
+
