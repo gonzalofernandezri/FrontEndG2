@@ -91,8 +91,11 @@
         class="fixed inset-0 bg-black/50 flex items-center justify-center z-50"
         @click.self="cerrarModal"
       >
-        <div class="bg-white rounded-lg w-full max-w-md shadow-lg overflow-hidden">
-          
+        <div class="bg-white rounded-lg w-full max-w-md shadow-lg overflow-hidden ">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 text-red-500 absolute top-4 right-4">
+            <path stroke-linecap="round" stroke-linejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+          </svg>
+
           <h2 class="text-2xl font-bold p-5">
               {{ eventoSeleccionado.titulo }}
           </h2>
@@ -140,7 +143,6 @@
 
       </div>
 
-
     </div>
 </template>
 
@@ -175,7 +177,6 @@ async function calcularPaginas(){
   const res = await fetch(`/api/eventostodo_api.php?${params.toString()}`)
   const data = await res.json();
   totalPaginas = Math.ceil(Number(data) / eventosPorPagina);
-  console.log(totalPaginas)
 }
 
 async function cargarEventos() {
@@ -197,7 +198,7 @@ async function cargarEventos() {
 
   const res = await fetch(`/api/eventos_api.php?${params.toString()}`)
   const data = await res.json()
-  console.log(data)
+
   eventos.value = data;
 }
 
@@ -227,7 +228,7 @@ onMounted(() => {
 
 const eventoSeleccionado = ref(null)
 
-const abrirModal = (evento) => {
+const abrirModal = (evento) => {  
   eventoSeleccionado.value = evento
 }
 
@@ -235,6 +236,22 @@ const cerrarModal = () => {
   eventoSeleccionado.value = null
 }
 
+async function inscribirse(){
+  const params = new URLSearchParams()
+
+  const userId = localStorage.getItem('user_id')
+  const eventoId = eventoSeleccionado.value.id
+  const fechaHoy = new Date().toISOString().split('T')[0]
+
+  params.append('user_id', userId)
+  params.append('evento_id', eventoId)
+  params.append('fecha', fechaHoy)
+
+  const res = await fetch(`/api/apuntarseEvento_api.php?${params.toString()}`)
+  console.log(res)
+  cerrarModal();
+  
+}
 
 </script>
 
