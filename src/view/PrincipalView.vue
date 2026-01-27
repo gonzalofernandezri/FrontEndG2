@@ -10,7 +10,7 @@
           <li>
             <router-link
               to="/juegos"
-              class="bg-orange-300 rounded  text-black p-3 hover:text-orange-700 nav-link"
+              class="bg-purple-300 rounded  font-bold text-white p-3 hover:bg-purple-500 nav-link"
             >
               Juegos
             </router-link>
@@ -18,7 +18,7 @@
           <li>
             <router-link
               to="/eventos"
-              class="bg-orange-300 text-black rounded p-3 hover:text-orange-700 nav-link"
+              class="bg-purple-300 text-white font-bold rounded p-3 hover:bg-purple-500 nav-link"
             >
               Eventos
             </router-link>

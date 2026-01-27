@@ -13,7 +13,7 @@
             />
           </router-link>
 
-          <h1 class="text-white flex flex-col ms-5 my-auto text-3xl font-bold">
+          <h1 class="text-white flex flex-col ms-5 my-auto text-2xl font-bold">
             ElorrietaFest
           </h1>
 
@@ -21,7 +21,7 @@
             <li>
               <router-link
                 to="/juegos"
-                class="bg-orange-300 rounded p-3 hover:text-orange-800 nav-link"
+                class=" text-white  text-2xl font-bold  rounded p-3 hover:text-purple-800 nav-link"
               >
                 Juegos
               </router-link>
@@ -29,7 +29,7 @@
             <li>
               <router-link
                 to="/eventos"
-                class="bg-orange-300 rounded p-3 hover:text-orange-800 nav-link"
+                class="text-white   text-2xl font-bold   rounded p-3 hover:text-purple-800 nav-link"
               >
                 Eventos
               </router-link>
