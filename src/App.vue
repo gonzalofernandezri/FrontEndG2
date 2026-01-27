@@ -93,7 +93,6 @@
 
 <style>
 .fondo {
-  /* background-image: url('../img/azulFondo.png'); */
   background-size: cover;
   background-position: center;
 }
