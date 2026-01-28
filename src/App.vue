@@ -42,7 +42,7 @@
             <li>
               <router-link
                 to="/login"
-                class="text-white   text-2xl font-bold   rounded p-3 hover:text-purple-800 nav-link"
+                class="text-white   text-xl font-bold   rounded p-3 hover:text-purple-800 nav-link"
               >
                 Login
               </router-link>
@@ -65,17 +65,17 @@
         </div>
 
         <div class="flex flex-col my-auto ms-auto">
-          <h3 class="mb-2 m-auto">Enlaces</h3>
+          <h3 class="mb-2 m-auto text-white font-blod text-xl">Enlaces</h3>
           <div>
             <ol class="flex gap-6">
               <li>
-                <router-link to="/juegos"> Juegos </router-link>
+                <router-link to="/juegos" class="text-white text-blod hover:text-purple-700"> Juegos </router-link>
               </li>
               <li>
-                <router-link to="/eventos"> Eventos </router-link>
+                <router-link to="/eventos" class="text-white text-blod hover:text-purple-700"> Eventos </router-link>
               </li>
               <li>
-                <router-link to="/login"> Login </router-link>
+                <router-link to="/login" class="text-white text-blod hover:text-purple-700"> Login </router-link>
               </li>
             </ol>
           </div>
