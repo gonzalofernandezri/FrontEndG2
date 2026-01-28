@@ -21,7 +21,7 @@
             <li>
               <router-link
                 to="/juegos"
-                class=" text-white  text-2xl font-bold  rounded p-3 hover:text-purple-800 nav-link"
+                class="text-white text-2xl font-bold rounded p-3 hover:text-purple-800 nav-link"
               >
                 Juegos
               </router-link>
@@ -29,12 +29,12 @@
             <li>
               <router-link
                 to="/eventos"
-                class="text-white   text-2xl font-bold   rounded p-3 hover:text-purple-800 nav-link"
+                class="text-white text-2xl font-bold rounded p-3 hover:text-purple-800 nav-link"
               >
                 Eventos
               </router-link>
             </li>
-                        <li>
+            <li>
               <router-link
                 to="/login"
                 class="bg-orange-300 rounded p-3 hover:text-orange-800 nav-link"
@@ -83,28 +83,46 @@
               <li>
                 <router-link to="/usuarios"> Usuarios </router-link>
               </li>
-
             </ol>
           </div>
         </div>
         <div class="w-[200px] ms-auto my-auto flex flex-col gap-4">
           <p class="m-auto">¡Siguenos!</p>
           <div class="m-auto flex flex-row gap-x-4">
-            <img
-              src="../img/facebook.png"
-              alt="facebook"
-              class="h-[30px] w-auto hover:bg-blue-700"
-            />
-            <img
-              src="../img/instagram_10.png"
-              alt="instagram"
-              class="h-[30px] w-auto hover:bg-blue-700"
-            />
-            <img
-              src="../img/iconX.png"
-              alt="iconX"
-              class="h-[30px] w-auto hover:bg-blue-700"
-            />
+            <!-- Facebook -->
+            <a
+              href="https://www.facebook.com"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img
+                src="../img/facebook.png"
+                alt="Facebook"
+                class="h-[30px] w-auto hover:brightness-90 transition duration-200"
+              />
+            </a>
+
+            <!-- Instagram -->
+            <a
+              href="https://www.instagram.com"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img
+                src="../img/instagram_10.png"
+                alt="Instagram"
+                class="h-[30px] w-auto hover:brightness-1000 transition duration-200"
+              />
+            </a>
+
+            <!-- X / Twitter -->
+            <a href="https://x.com" target="_blank" rel="noopener noreferrer">
+              <img
+                src="../img/iconX.png"
+                alt="X (Twitter)"
+                class="h-[30px] w-auto hover:brightness-300 transition duration-200"
+              />
+            </a>
           </div>
         </div>
       </footer>
@@ -119,6 +137,8 @@
   background-size: cover;
   background-position: center;
 }
+
+
 nav {
   background: linear-gradient(
     to right,
