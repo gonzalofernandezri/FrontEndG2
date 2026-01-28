@@ -26,7 +26,12 @@
             <li>
               <router-link
                 to="/juegos"
-                class="text-white text-xl font-bold rounded px-4 py-2 hover:text-purple-700 transition-colors"
+                :class="[
+                  'text-white text-xl font-bold rounded-3xl px-4 py-2 transition-colors',
+                  route.path === '/juegos'
+                    ? 'shadow-inner shadow-black/40 brightness-95 '
+                    : 'hover:text-purple-700 hover:shadow-xl cursor-pointer'
+                ]"
               >
                 Juegos
               </router-link>
@@ -34,7 +39,12 @@
             <li>
               <router-link
                 to="/eventos"
-                class="text-white text-xl font-bold rounded px-4 py-2 hover:text-purple-700 transition-colors"
+                :class="[
+                  'text-white text-xl font-bold rounded-3xl px-4 py-2 transition-colors',
+                  route.path === '/eventos'
+                    ? 'shadow-inner shadow-black/40 brightness-95 '
+                    : 'hover:text-purple-700 hover:shadow-xl cursor-pointer'
+                ]"
               >
                 Eventos
               </router-link>
@@ -132,10 +142,10 @@
 </template>
 
 <script setup>
+import { useRoute } from 'vue-router'
 
 
-
-
+const route = useRoute()
 </script>
 
 <style>
