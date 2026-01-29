@@ -1,8 +1,8 @@
 <template>
-    <div class="flex items-center justify-center grow bg-gray-100">    
+    <div class="flex items-center justify-center grow bg-gray-100 grow">    
       <div class="w-full max-w-6xl mx-auto p-6 flex flex-col items-center gap-6 pt-40 md:pt-30">
-        <div class="flex flex-col sm:flex-row gap-4 w-full">
-          <select v-model="tipo" @change="cambiarFiltros"  class="border p-2 rounded flex-1">
+        <div class="flex flex-col sm:flex-row gap-4 w-full mt-7 ">
+          <select v-model="tipo" @change="cambiarFiltros"  class="border p-2 rounded flex-1 ">
             <option value="">Todos</option>
             <option value="Presentación">Presentación</option>
             <option value="Charla">Charla</option>
@@ -28,47 +28,48 @@
           </label>
         </div>
         <div class="w-full max-w-6xl">
-          <ul class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6 min-h-[300px] place-items-center">
-              <li 
-                v-for="evento in eventos" 
-                :key="evento.id" 
-                class="bg-gray-100 p-5 rounded-xl shadow-md hover:shadow-xl transition-shadow duration-300 gap-3 w-[370px]"  
-              >
-              <!-- TARJETA INTERIOR -->
-              <div @click="abrirModal(evento)" class="rounded-lg shadow-md overflow-hidden flex flex-col bg-white h-full min-h-[300px] w-[330px]">
+  <ul class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10 place-items-center">
+    <li 
+      v-for="evento in eventos" 
+      :key="evento.id" 
+      class="bg-gray-100 p-5 rounded-xl shadow-md hover:shadow-xl transition-shadow duration-300 w-[370px]"
+    >
+      <!-- TARJETA INTERIOR -->
+      <div @click="abrirModal(evento)" class="rounded-lg shadow-md overflow-hidden flex flex-col bg-white h-full min-h-[350px] w-full">
       
-                <!-- Imagen -->
-                <img 
-                  v-if="evento.imagen" 
-                  :src="`/gamefest_resources/events/${evento.imagen}`" 
-                  alt="Imagen del evento" 
-                  class="w-full h-48 object-cover"
-                />
+        <!-- Imagen -->
+        <img 
+          v-if="evento.imagen" 
+          :src="`/gamefest_resources/events/${evento.imagen}`" 
+          alt="Imagen del evento" 
+          class="w-full h-48 object-cover rounded"
+        />
 
-                <!-- Datos -->
-                <div class="p-4 flex flex-col gap-2 flex-1">
-                  <strong class="text-xl">{{ evento.titulo }}</strong>
+        <!-- Datos -->
+        <div class="p-4 flex flex-col gap-2 flex-1">
+          <strong class="text-xl">{{ evento.titulo }}</strong>
 
-                  <div class="text-gray-600 text-sm grid grid-cols-2 gap-x-4 gap-y-1">
-                    <div>
-                      <span class="font-medium">Tipo:</span> {{ evento.tipo }}
-                    </div>
-                    <div>
-                      <span class="font-medium">Plazas libres:</span> {{ evento.plazasLibres }}
-                    </div>
+          <div class="text-gray-600 text-sm grid grid-cols-2 gap-x-4 gap-y-1">
+            <div>
+              <span class="font-medium">Tipo:</span> {{ evento.tipo }}
+            </div>
+            <div>
+              <span class="font-medium">Plazas libres:</span> {{ evento.plazasLibres }}
+            </div>
 
-                    <div>
-                      <span class="font-medium">Fecha:</span> {{ evento.fecha }}
-                    </div>
-                    <div>
-                      <span class="font-medium">Hora:</span> {{ evento.hora }}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </li>
-          </ul>
+            <div>
+              <span class="font-medium">Fecha:</span> {{ evento.fecha }}
+            </div>
+            <div>
+              <span class="font-medium">Hora:</span> {{ evento.hora }}
+            </div>
+          </div>
         </div>
+      </div>
+    </li>
+  </ul>
+</div>
+
 
 
         <div class="flex gap-4">
@@ -90,13 +91,10 @@
         <!-- MODAL -->
         <div 
           v-if="eventoSeleccionado"
-          class="fixed inset-0 bg-black/50 flex items-center justify-center z-50"
+          class="fixed inset-0 bg-black/90 flex items-center justify-center z-50"
           @click.self="cerrarModal"
         >
           <div class="bg-white rounded-lg w-full max-w-md shadow-lg overflow-hidden ">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 text-green-500 top-4 right-4 ms-106  ">
-              <path stroke-linecap="round" stroke-linejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-            </svg>
 
             <h2 class="text-2xl font-bold p-5">
                 {{ eventoSeleccionado.titulo }}
