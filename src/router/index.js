@@ -4,6 +4,10 @@ import Juegos from '../view/JuegosView.vue'
 import Eventos from '../view/EventosView.vue'
 import Usuarios from '../view/Usuarios.vue'
 import Login from '../view/Login.vue'
+import Perfiles from '../view/Perfiles.vue'
+import CrearEvento from '../view/crearEvento.vue'
+
+
 
 
 const routes = [
@@ -35,7 +39,17 @@ const routes = [
     path: '/login',
     name: 'Login',
     component: Login
-  }
+  },       {
+    path: '/perfiles',
+    name: 'Perfiles',
+    component: Perfiles
+  },{
+    path: '/crearEvento',
+    name: 'CrearEvento',
+    // meta:{ requiresAuth: true },
+    component: CrearEvento
+}
+
 
 ]
 

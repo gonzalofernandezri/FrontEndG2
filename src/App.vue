@@ -46,6 +46,12 @@
               >
                 Login
               </router-link>
+              <router-link
+                to="/perfiles"
+                class="text-white   text-xl font-bold   rounded p-3 hover:text-purple-800 nav-link"
+              >
+                Perfil
+              </router-link>
             </li>
           </ol>
         </nav>
@@ -76,6 +82,9 @@
               </li>
               <li>
                 <router-link to="/login" class="text-white text-blod hover:text-purple-700"> Login </router-link>
+              </li>
+               <li>
+                <router-link to="/perfiles" class="text-white text-blod hover:text-purple-700"> Login </router-link>
               </li>
             </ol>
           </div>

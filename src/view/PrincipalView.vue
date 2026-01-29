@@ -20,6 +20,12 @@
         >
           Eventos
         </router-link>
+                          <router-link
+          to="/crearEvento"
+          class="bg-purple-300 text-white font-bold rounded p-3 hover:bg-purple-500 nav-link w-full sm:w-auto text-center"
+        >
+          Eventos
+        </router-link>
         <div class="mt-2 text-center">
           <span>No tienes cuenta?</span>
           <router-link
