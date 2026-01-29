@@ -28,7 +28,7 @@
           </label>
         </div>
         <div class="w-full max-w-6xl">
-          <ul class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
+          <ul class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6 min-h-[300px] place-items-center">
               <li 
                 v-for="evento in eventos" 
                 :key="evento.id" 
