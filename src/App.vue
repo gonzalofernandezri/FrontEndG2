@@ -63,7 +63,7 @@
               </router-link>
             </li>
              <li>
-              <router-link
+              <!-- <router-link
                 to="/perfil"
                 :class="[
                   'text-white text-xl font-bold rounded-3xl px-4 py-2 transition-colors',
@@ -73,7 +73,7 @@
                 ]"
               >
                 Perfil
-              </router-link>
+              </router-link> -->
             </li>
           </ol>
         </nav>
@@ -86,7 +86,7 @@
       <footer class="h-[125px] p-5 bg-gray-500 flex">
         <div>
           <img
-            src="../img/ElorrietaFest.png"
+            src="../img/ElorrietaFest2.png"
             alt="ElorrietaFest  "
             class="h-14 w-auto"
           />
@@ -109,7 +109,7 @@
           </div>
         </div>
         <div class=" ms-auto my-auto flex flex-col gap-4">
-          <p class="m-auto">¡Siguenos!</p>
+          <p class="m-auto text-white font-blod ">¡Siguenos!</p>
           <div class="m-auto flex flex-row gap-x-4">
            
             <a
@@ -156,6 +156,8 @@ import { useRoute } from 'vue-router'
 
 
 const route = useRoute()
+
+
 </script>
 
 <style>

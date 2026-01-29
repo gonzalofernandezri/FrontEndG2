@@ -42,9 +42,9 @@ import { ref, onMounted } from "vue";
 
 const usuarioLogeado = ref(false);
 function cargarPrincipal() {
-  const loggedin = localStorage.getItem("logged_in")
+  const user = localStorage.getItem("username")
 
-  if(loggedin) {
+  if(user) {
     usuarioLogeado.value = true;
   } else {
     usuarioLogeado.value = false;
