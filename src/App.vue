@@ -5,7 +5,6 @@
         <nav
           class="fixed top-5 left-1/2 -translate-x-1/2 w-[calc(100%-40px)] border rounded-full p-5 flex flex-col md:flex-row items-center md:justify-between gap-2 md:gap-0"
         >
-      
           <div class="flex flex-col sm:flex-row items-center gap-4 md:gap-5">
             <router-link to="/principal">
               <img
@@ -20,13 +19,16 @@
             </h1>
           </div>
 
-          <ol
-            class="flex flex-wrap justify-center md:flex gap-4 md:gap-6 "
-          >
+          <ol class="flex flex-wrap justify-center md:flex gap-4 md:gap-6">
             <li>
               <router-link
                 to="/juegos"
-                class="text-white text-xl font-bold rounded px-4 py-2 hover:text-purple-700 transition-colors"
+                :class="[
+                  'text-white text-xl font-bold rounded-3xl px-4 py-2 transition-colors',
+                  route.path === '/juegos'
+                    ? 'shadow-inner lg:shadow-purple-700/50 shadow-blue-700/30 brightness-95 '
+                    : 'hover:shadow-xl lg:shadow-purple-700/20 shadow-blue-700/30 cursor-pointer'
+                ]"
               >
                 Juegos
               </router-link>
@@ -34,7 +36,12 @@
             <li>
               <router-link
                 to="/eventos"
-                class="text-white text-xl font-bold rounded px-4 py-2 hover:text-purple-700 transition-colors"
+                :class="[
+                  'text-white text-xl font-bold rounded-3xl px-4 py-2 transition-colors',
+                  route.path === '/eventos'
+                    ? 'shadow-inner lg:shadow-purple-700/50 shadow-blue-700/30 brightness-95 '
+                    : 'hover:shadow-xl lg:shadow-purple-700/20 shadow-blue-700/30 cursor-pointer'
+                ]"
               >
                 Eventos
               </router-link>
@@ -42,13 +49,25 @@
             <li>
               <router-link
                 to="/login"
-                class="text-white   text-xl font-bold   rounded p-3 hover:text-purple-800 nav-link"
+                 :class="[
+                  'text-white text-xl font-bold rounded-3xl px-4 py-2 transition-colors',
+                  route.path === '/login'
+                    ? 'shadow-inner shadow-purple-700/50 brightness-95 '
+                    : 'hover:shadow-xl shadow-purple-700/30 cursor-pointer'
+                ]"
+                v-if="!usuarioLogeado"
               >
                 Login
               </router-link>
               <router-link
                 to="/perfiles"
-                class="text-white   text-xl font-bold   rounded p-3 hover:text-purple-800 nav-link"
+                 :class="[
+                  'text-white text-xl font-bold rounded-3xl px-4 py-2 transition-colors',
+                  route.path === '/perfiles'
+                    ? 'shadow-inner shadow-purple-700/50 brightness-95'
+                    : 'hover:shadow-xl shadow-purple-700/30 cursor-pointer'
+                ]"
+                v-if="usuarioLogeado"
               >
                 Perfil
               </router-link>
@@ -75,16 +94,38 @@
           <div>
             <ol class="flex gap-6">
               <li>
-                <router-link to="/juegos" class="text-white text-blod hover:text-purple-700"> Juegos </router-link>
+                <router-link
+                  to="/juegos"
+                  class="text-white text-blod hover:text-purple-700"
+                >
+                  Juegos
+                </router-link>
               </li>
               <li>
-                <router-link to="/eventos" class="text-white text-blod hover:text-purple-700"> Eventos </router-link>
+                <router-link
+                  to="/eventos"
+                  class="text-white text-blod hover:text-purple-700"
+                >
+                  Eventos
+                </router-link>
               </li>
-              <li>
-                <router-link to="/login" class="text-white text-blod hover:text-purple-700"> Login </router-link>
+              <li v-if="!usuarioLogeado">
+                <router-link
+                  to="/login"
+                  class="text-white text-blod hover:text-purple-700"
+                  
+                >
+                  Login
+                </router-link>
               </li>
-               <li>
-                <router-link to="/perfiles" class="text-white text-blod hover:text-purple-700"> Login </router-link>
+              <li v-if="usuarioLogeado">
+                <router-link
+                  to="/perfiles"
+                  class="text-white text-blod hover:text-purple-700"
+                  
+                >
+                  Perfil
+                </router-link>
               </li>
             </ol>
           </div>
@@ -133,14 +174,29 @@
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+import { useRoute } from 'vue-router'
+import { ref, onMounted } from "vue";
+
+const route = useRoute()
+const usuarioLogeado = ref(false);
+
+async function ocultarLogin() {
+  const loggedIn = localStorage.getItem("logged_in");
+
+  if (loggedIn) {
+    usuarioLogeado.value = true;
+  }
+}
+
+onMounted(ocultarLogin);
+</script>
 
 <style>
 .fondo {
   background-size: cover;
   background-position: center;
 }
-
 
 nav {
   background: linear-gradient(

@@ -49,9 +49,7 @@ async function login() {
     localStorage.setItem('username', data.username)
     localStorage.setItem('role', data.role)       // <-- guardamos el rol
     localStorage.setItem('logged_in', 'true')
-
-
-
+     window.location.href="/perfiles";
 
   } else {
       alert(data.message)

@@ -35,7 +35,7 @@
 
             <button
               class="mt-4 bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 rounded shadow"
-              @click="cerrarSesion()"
+              @click="cerrarSesion"
             >
               Cerrar sesión
             </button>
@@ -210,6 +210,13 @@
     const res = await fetch(`/api/desapuntar_api.php?user_id=${user_id}&event_id=${event_id}`);
     mostrarEventos()
     cerrarModal()
+
+  }
+
+  async function cerrarSesion() {
+    localStorage.clear("loggedin_in", "role", "username", "user_id");
+    window.location.reload();
+    window.location.href="/principal";
 
   }
 
