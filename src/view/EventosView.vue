@@ -238,21 +238,29 @@ const cerrarModal = () => {
   eventoSeleccionado.value = null
 }
 
-async function inscribirse(){
-  const params = new URLSearchParams()
+async function inscribirse() {
+  if (!eventoSeleccionado.value) return;
 
-  const userId = localStorage.getItem('user_id')
-  const eventoId = eventoSeleccionado.value.id
-  const fechaHoy = new Date().toISOString().split('T')[0]
+  const eventoId = eventoSeleccionado.value.id;
+  const fechaHoy = new Date().toISOString().split('T')[0];
 
-  params.append('user_id', userId)
-  params.append('evento_id', eventoId)
-  params.append('fecha', fechaHoy)
+  try {
+    // Enviamos solo event_id y fecha por POST
+    const res = await fetch("/api/apuntarseEvento_api.php", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      credentials: "include", // envía cookie PHP
+      body: new URLSearchParams({
+        evento_id: eventoId,
+        fecha: fechaHoy
+      })
+    });
 
-  const res = await fetch(`/api/apuntarseEvento_api.php?${params.toString()}`)
-  console.log(res)
-  cerrarModal();
-  
+    cerrarModal();
+
+  } catch (err) {
+    console.error("Error inscribiéndose al evento:", err);
+  }
 }
 
 </script>

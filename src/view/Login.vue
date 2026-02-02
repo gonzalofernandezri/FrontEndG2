@@ -55,22 +55,21 @@ async function login() {
   params.append('password', contraseña.value)
 
   try {
-    const res = await fetch(`/api/login_api.php?${params.toString()}`, {
-      method: 'GET',
-      credentials: 'include'
+    const res = await fetch('/api/login_api.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      credentials: 'include', // <--- envía la cookie PHP
+      body: new URLSearchParams({
+        username: usuario.value,
+        password: contraseña.value
+      })
     })
 
     const data = await res.json()
     console.log(data)
 
     if (data.success) {
-      mostrarAlerta(`Usuario logueado: ${data.username}`, 'success')
-
-
-      localStorage.setItem('user_id', data.user_id)
-      localStorage.setItem('username', data.username)
-      localStorage.setItem('role', data.role)       
-      localStorage.setItem('logged_in', 'true')
+      mostrarAlerta(`Usuario logueado: ${data.username}`, 'success')  
       window.location.href="/perfiles";
     } else {
       mostrarAlerta(data.message || 'Error al iniciar sesión', 'error')

@@ -173,42 +173,50 @@ import Swal from 'sweetalert2';
   const usuario = ref(null);
 
   async function cargarUsuario() {
-    const loggedIn = localStorage.getItem("logged_in");
+    try {
+      const res = await fetch("api/perfil_api.php", {
+        credentials: "include" // <--- envía cookie PHP
+      });
+      const data = await res.json();
 
-    if (loggedIn) {
-      usuarioLogeado.value = true;
+      if (data.session && data.session.logged_in) {
+        usuarioLogeado.value = true;
+        usuario.value = data.session;
+        roluser.value = data.session.role; // ya sabemos el rol
 
-      try {
-        const res = await fetch("api/perfil_api.php", {
-          credentials: "include",
-        });
-        const data = await res.json();
-        if (!data.error) {
-          usuario.value = data;
-        } else {
-          // console.error(data.error);
-          usuarioLogeado.value = false;
-        }
-        } catch (err) {
-          usuarioLogeado.value = false;
-        }
-        } else {
-          usuarioLogeado.value = false;
-        }
+      } else {
+        usuarioLogeado.value = false;
+        usuario.value = null;
+        roluser.value = null;
+      }
+    } catch (err) {
+      console.error("Error cargando usuario:", err);
+      usuarioLogeado.value = false;
+      usuario.value = null;
+      roluser.value = null;
     }
-
-  async function rol() {
-    const role = localStorage.getItem("role");
-    roluser.value = role
   }
+
+  function rol() {
+    if (usuario.value) {
+      roluser.value = usuario.value.role;
+    } else {
+      roluser.value = null;
+  }
+}
 
   async function mostrarEventos() {
-    const id = localStorage.getItem("user_id")
-    const res = await fetch(`/api/eventosUsuario_api.php?iduser=${id}`);
+  try {
+    const res = await fetch('/api/eventosUsuario_api.php', {
+      credentials: 'include' // envía cookie PHP
+    });
     const data = await res.json();
-    eventos.value = data;
     console.log(data)
+    eventos.value = data;
+  } catch (err) {
+    console.error('Error cargando eventos:', err);
   }
+}
 
   const abrirModal = (evento) => {  
     eventoSeleccionado.value = evento
@@ -218,27 +226,49 @@ import Swal from 'sweetalert2';
     eventoSeleccionado.value = null
   }
 
-  async function desapuntar(){
-    const user_id = localStorage.getItem("user_id");
+  async function desapuntar() {
+    if (!eventoSeleccionado.value) return;
+
     const event_id = eventoSeleccionado.value.id;
-    console.log(user_id);
-    console.log(event_id)
 
-    const res = await fetch(`/api/desapuntar_api.php?user_id=${user_id}&event_id=${event_id}`);
-    mostrarEventos()
-    cerrarModal()
+    try {
+      // Solo pasamos el event_id; el backend toma user_id de la sesión
+      await fetch(`/api/desapuntar_api.php?event_id=${event_id}`, {
+        method: 'POST', // más seguro que GET
+        credentials: 'include' // envía la cookie de sesión PHP
+      });
 
+      // Actualizamos la lista de eventos y cerramos el modal
+      await mostrarEventos();
+      cerrarModal();
+
+    } catch (err) {
+      console.error("Error al desapuntar:", err);
+    }
   }
 
-async function cerrarSesion() {
-  await mostrarAlerta('Sesión cerrada correctamente', 'success');
 
-  localStorage.clear();
-  window.location.href = "/principal";
+  async function cerrarSesion() {
+  try {
+    await fetch("/api/logout.php", {
+      method: "POST",       // destruimos la sesión con POST
+      credentials: "include" // enviamos la cookie PHP
+    });
+
+    // Limpiamos variables reactivas locales (opcional)
+    usuarioLogeado.value = false;
+    usuario.value = null;
+    roluser.value = null;
+    eventos.value = [];
+
+    // Redirigimos al usuario a la página principal
+    window.location.href = "/principal";
+
+  } catch (err) {
+    console.error("Error cerrando sesión:", err);
+  }
 }
 
-
-  
   onMounted(mostrarEventos)
   onMounted(rol)
   onMounted(cargarUsuario);
