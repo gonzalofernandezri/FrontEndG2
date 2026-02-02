@@ -1,142 +1,155 @@
-<template>
-  <div class="flex items-center justify-center grow bg-gray-100 pt-30">
-    <div class="flex flex-col items-center min-h-screen p-4">
-      <!-- Búsqueda -->
-      <div class="w-full flex justify-center mb-4">
+  <template>
+    <div class="flex items-center justify-center grow bg-gray-100 pt-30">
+      <div class="flex flex-col items-center min-h-screen p-4 mt-20 lg:mt-[5px]">
+        <!-- Búsqueda -->
+      <div class="w-full max-w-4xl mx-auto mb-4 md:mb-2 px-4">
         <input
           @input="juegosFiltrados"
           type="text"
           v-model="busqueda"
           placeholder="Buscar juego..."
-          class="border p-2 rounded w-285"
+          class="border p-2 rounded w-full"
         />
       </div>
 
-      <!-- Lista de juegos -->
-      <div class="w-full max-w-6xl">
-        <ul class="grid grid-cols-3 gap-5">
-          <li
-            v-for="juego in juegos"
-            :key="juego.id"
-            class="border p-2 rounded shadow hover:shadow-lg transition cursor-pointer"
-            @click="abrirModal(juego)"
+
+
+        <!-- Lista de juegos -->
+
+        <div class="w-full max-w-6xl px-20 md:m-5">
+          <ul
+            class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 justify-items-center"
           >
-            <div>
-              <img
-                :src="'../../gamefest_resources/games/' + juego.imagen"
-                :alt="'Imagen de ' + juego.titulo"
-                class="w-full h-40 object-cover rounded"
-              />
-            </div>
-            <h3 class="font-sans md:font-serif">Titulo: {{ juego.titulo }}</h3>
-            <p class="font-sans md:font-serif">
-              Plataforma: {{ JSON.parse(juego.plataformas).join(", ") }}
-            </p>
-            <p class="font-sans md:font-serif">Género: {{ juego.genero }}</p>
-            <p class="font-sans md:font-serif">
-              Descripción: {{ juego.descripcion }}
-            </p>
-          </li>
-        </ul>
-      </div>
-    </div>
+            <li
+              v-for="juego in juegos"
+              :key="juego.id"
+              class="border p-3 rounded shadow hover:shadow-lg transition cursor-pointer w-full sm:max-w-[500px] lg:max-w-none"
+              @click="abrirModal(juego)"
+            >
+              <div>
+                <img
+                  :src="'../../gamefest_resources/games/' + juego.imagen"
+                  :alt="'Imagen de ' + juego.titulo"
+                  class="w-full h-full sm:h-36 object-cover rounded"
+                />
+              </div>
 
-    <!-- MODAL -->
-    <transition name="fade">
-      <div
-        v-if="modalVisible"
-        class="fixed inset-0 bg-black/88 flex items-center justify-center z-50"
-        @click.self="cerrarModal"
-      >
-        <div
-          class="bg-white rounded-lg w-full max-w-md shadow-lg overflow-hidden transform transition-transform duration-200 scale-95 relative"
-        >
-          <!-- Botón cerrar arriba a la derecha -->
-          <button
-            @click="cerrarModal"
-            class="absolute top-3 right-3 text-red-600 text-3xl font-bold hover:text-red-800 hover:scale-110 transition-all"
-            aria-label="Cerrar modal"
-          >
-            &times;
-          </button>
+              <h3 class="font-sans md:font-serif mt-2">
+                Titulo: {{ juego.titulo }}
+              </h3>
 
-          <!-- Imagen grande -->
-          <div class="p-5">
-            <img
-              v-if="juegoSeleccionado"
-              :src="'../../gamefest_resources/games/' + juegoSeleccionado.imagen"
-              :alt="juegoSeleccionado.titulo"
-              class="w-full h-64 object-cover rounded-lg"
-            />
-          </div>
+              <p class="font-sans md:font-serif">
+                Plataforma: {{ JSON.parse(juego.plataformas).join(", ") }}
+              </p>
 
-          <!-- Datos del juego -->
-          <div class="p-5 flex flex-col gap-2">
-            <h2 class="text-2xl font-bold">{{ juegoSeleccionado.titulo }}</h2>
-            <p>
-              <strong>Plataforma:</strong>
-              {{
-                juegoSeleccionado.plataformas
-                  ? JSON.parse(juegoSeleccionado.plataformas).join(", ")
-                  : ""
-              }}
-            </p>
-            <p><strong>Género:</strong> {{ juegoSeleccionado.genero }}</p>
-            <p>
-              <strong>Descripción:</strong> {{ juegoSeleccionado.descripcion }}
-            </p>
-          </div>
+              <p class="font-sans md:font-serif">Género: {{ juego.genero }}</p>
+
+              <p class="font-sans md:font-serif text-sm">
+                Descripción: {{ juego.descripcion }}
+              </p>
+            </li>
+          </ul>
         </div>
       </div>
-    </transition>
-  </div>
-</template>
 
-<script setup>
-import { ref, onMounted } from "vue";
+      <!-- MODAL -->
+      <transition name="fade">
+        <div
+          v-if="modalVisible"
+          class="fixed inset-0 bg-black/88 flex items-center justify-center z-50"
+          @click.self="cerrarModal"
+        >
+          <div
+            class="bg-white rounded-lg w-full max-w-md shadow-lg overflow-hidden transform transition-transform duration-200 scale-95 relative"
+          >
+            <!-- Botón cerrar arriba a la derecha -->
+            <button
+              @click="cerrarModal"
+              class="absolute top-3 right-3 text-red-600 text-3xl font-bold hover:text-red-800 hover:scale-110 transition-all"
+              aria-label="Cerrar modal"
+            >
+              &times;
+            </button>
 
-const juegos = ref([]);
-const busqueda = ref("");
-const modalVisible = ref(false);
-const juegoSeleccionado = ref(null);
+            <!-- Imagen grande -->
+            <div class="p-5">
+              <img
+                v-if="juegoSeleccionado"
+                :src="
+                  '../../gamefest_resources/games/' + juegoSeleccionado.imagen
+                "
+                :alt="juegoSeleccionado.titulo"
+                class="w-full h-64 object-cover rounded-lg"
+              />
+            </div>
 
-// Cargar todos los juegos
-async function cargarJuegos() {
-  const res = await fetch("/api/juegos_api.php");
-  juegos.value = await res.json();
-}
+            <!-- Datos del juego -->
+            <div class="p-5 flex flex-col gap-2">
+              <h2 class="text-2xl font-bold">{{ juegoSeleccionado.titulo }}</h2>
+              <p>
+                <strong>Plataforma:</strong>
+                {{
+                  juegoSeleccionado.plataformas
+                    ? JSON.parse(juegoSeleccionado.plataformas).join(", ")
+                    : ""
+                }}
+              </p>
+              <p><strong>Género:</strong> {{ juegoSeleccionado.genero }}</p>
+              <p>
+                <strong>Descripción:</strong> {{ juegoSeleccionado.descripcion }}
+              </p>
+            </div>
+          </div>
+        </div>
+      </transition>
+    </div>
+  </template>
 
-// Filtrar juegos
-async function juegosFiltrados() {
-  const query = busqueda.value.trim();
-  const res = await fetch(
-    `/api/juegos_api.php?query=${encodeURIComponent(query)}`
-  );
-  juegos.value = await res.json();
-}
+  <script setup>
+  import { ref, onMounted } from "vue";
 
-// Abrir modal
-function abrirModal(juego) {
-  juegoSeleccionado.value = juego;
-  modalVisible.value = true;
-}
+  const juegos = ref([]);
+  const busqueda = ref("");
+  const modalVisible = ref(false);
+  const juegoSeleccionado = ref(null);
 
-// Cerrar modal
-function cerrarModal() {
-  modalVisible.value = false;
-}
+  // Cargar todos los juegos
+  async function cargarJuegos() {
+    const res = await fetch("/api/juegos_api.php");
+    juegos.value = await res.json();
+  }
 
-onMounted(cargarJuegos);
-</script>
+  // Filtrar juegos
+  async function juegosFiltrados() {
+    const query = busqueda.value.trim();
+    const res = await fetch(
+      `/api/juegos_api.php?query=${encodeURIComponent(query)}`,
+    );
+    juegos.value = await res.json();
+  }
 
-<style>
-/* Animación para el modal */
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.2s;
-}
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
-}
-</style>
+  // Abrir modal
+  function abrirModal(juego) {
+    juegoSeleccionado.value = juego;
+    modalVisible.value = true;
+  }
+
+  // Cerrar modal
+  function cerrarModal() {
+    modalVisible.value = false;
+  }
+
+  onMounted(cargarJuegos);
+  </script>
+
+  <style>
+  /* Animación para el modal */
+  .fade-enter-active,
+  .fade-leave-active {
+    transition: opacity 0.2s;
+  }
+  .fade-enter-from,
+  .fade-leave-to {
+    opacity: 0;
+  }
+  </style>
