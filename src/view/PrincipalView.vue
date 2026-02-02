@@ -1,7 +1,7 @@
 <template>
   <div class="flex items-center justify-center grow bg-gray-100 fondo sm:py-10">
     <div
-      class="w-100 h-70 bg-blue-400 text-white p-6 rounded-lg shadow-lg text-center space-y-20 back"
+      class="w-100 h-70 bg-gradient-to-r from-blue-400/50 to-purple-400/50 text-white size-100 font-black text-center rounded-lg border-black p-6 backdrop-blur-sm p-6 rounded-lg  space-y-20 "
     >
       <h4 class="text-3xl font-bold text-sm md:text-lg lg:text-2xl">
         ¡BIENVENIDO/A A ElorrietaFest!
@@ -37,13 +37,7 @@
 </script>
 
 <style>
-.back {
-  background: linear-gradient(
-    to right,
-    var(--color-blue-500),
-    var(--color-purple-400)
-  );
-}
+
 
 .fondo {
   background-image: url("../../img/aaa.png");

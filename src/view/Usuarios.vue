@@ -1,7 +1,7 @@
 <template>
   <div class="flex items-center justify-center grow bg-gray-100 fondo">
     <div class="justify-center flex flex-col items-center space-y-4 "> 
-      <div class="bg-gradient-to-r from-blue-400 to-purple-400 text-white size-100 font-black text-center rounded-lg border-black p-6">
+<div class="bg-gradient-to-r from-blue-400/50 to-purple-400/50 text-white size-100 font-black text-center rounded-lg border-black p-6 backdrop-blur-sm">
         <h2 class="text-xl my-1">Registro de Usuario</h2><br>
         <form @submit.prevent="registrarUsuario">
           <div>
@@ -24,7 +24,10 @@
 </template>
 
 <script>
-import Swal from 'sweetalert2'
+import Swal from 'sweetalert2';
+      
+
+
 
 export default {
   data() {
@@ -34,19 +37,22 @@ export default {
       contraseña: ''
     }
   },
-  methods: {
-    mostrarAlerta(titulo, tipo = 'info') {
+    methods: {
+    mostrarAlerta(titulo, tipo) {
       Swal.fire({
         title: titulo,
-        icon: tipo, // success, error, warning, info
+        icon: tipo, 
         background: '#1e1e2f',
         color: '#f5f5f5',
         confirmButtonColor: '#4f46e5'
-      })
+      });
     },
+
+
 
     async registrarUsuario() {
 
+      
       if (!this.usuario) {
         this.mostrarAlerta('El nombre de usuario es obligatorio', 'error')
         return
@@ -86,9 +92,8 @@ export default {
           }
       }
   
+
     }
-
-
 
   
 </script>
