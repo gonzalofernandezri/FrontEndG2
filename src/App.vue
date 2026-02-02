@@ -183,10 +183,22 @@ const route = useRoute()
 const usuarioLogeado = ref(false);
 
 async function ocultarLogin() {
-  const loggedIn = localStorage.getItem("logged_in");
+  try {
+    const res = await fetch("/api/perfil_api.php", {
+      credentials: "include" // envía la cookie de sesión PHP
+    });
 
-  if (loggedIn) {
-    usuarioLogeado.value = true;
+    const data = await res.json();
+
+    if (data.session && data.session.logged_in) {
+      usuarioLogeado.value = true;
+    } else {
+      usuarioLogeado.value = false;
+    }
+
+  } catch (err) {
+    console.error("Error comprobando sesión:", err);
+    usuarioLogeado.value = false;
   }
 }
 
