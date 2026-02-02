@@ -149,6 +149,9 @@
 
 
 <script setup>
+
+import Swal from 'sweetalert2';
+
   import { ref, onMounted } from "vue";
 
   const roluser = ref(null);
@@ -215,16 +218,33 @@
 
   }
 
-  async function cerrarSesion() {
-    localStorage.clear("loggedin_in", "role", "username", "user_id");
-    window.location.reload();
-    window.location.href="/principal";
+async function cerrarSesion() {
+  await mostrarAlerta('Sesión cerrada correctamente', 'success');
 
-  }
+  localStorage.clear();
+  window.location.href = "/principal";
+}
+
 
   onMounted(mostrarEventos)
   onMounted(rol)
   onMounted(cargarUsuario);
+
+function mostrarAlerta(titulo, tipo) {
+  return Swal.fire({
+    title: titulo,
+    icon: tipo,
+    background: '#1e1e2f',
+    color: '#f5f5f5',
+    confirmButtonColor: '#4f46e5',
+    confirmButtonText: 'Aceptar'
+  });
+}
+
+
+
+  
+
     
 </script>
 
