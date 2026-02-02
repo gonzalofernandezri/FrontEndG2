@@ -23,79 +23,75 @@
   </div>
 </template>
 
-<script>
-import Swal from 'sweetalert2';
-      
+<script setup>
+import { ref } from 'vue'
+import Swal from 'sweetalert2'
 
+// Estado (antes data())
+const usuario = ref('')
+const email = ref('')
+const contraseña = ref('')
 
+// Alerta
+function mostrarAlerta(titulo, tipo = 'info') {
+  Swal.fire({
+    title: titulo,
+    icon: tipo,
+    background: '#1e1e2f',
+    color: '#f5f5f5',
+    confirmButtonColor: '#4f46e5'
+  })
+}
 
-export default {
-  data() {
-    return {
-      usuario: '',
-      email: '',
-      contraseña: ''
-    }
-  },
-    methods: {
-    mostrarAlerta(titulo, tipo) {
-      Swal.fire({
-        title: titulo,
-        icon: tipo, 
-        background: '#1e1e2f',
-        color: '#f5f5f5',
-        confirmButtonColor: '#4f46e5'
-      });
-    },
+// Registro
+async function registrarUsuario() {
+  if (!usuario.value) {
+    mostrarAlerta('El nombre de usuario es obligatorio', 'error')
+    return
+  }
 
+  if (!email.value) {
+    mostrarAlerta('El email es obligatorio', 'error')
+    return
+  }
 
+  if (!contraseña.value) {
+    mostrarAlerta('La contraseña es obligatoria', 'error')
+    return
+  }
 
-    async registrarUsuario() {
+  try {
+    const res = await fetch('/api/usuarios_api.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        usuario: usuario.value,
+        email: email.value,
+        contraseña: contraseña.value
+      })
+    })
 
-      
-      if (!this.usuario) {
-        this.mostrarAlerta('El nombre de usuario es obligatorio', 'error')
-        return
-      }
-      if (!this.email) {
-        this.mostrarAlerta('El email es obligatorio', 'error')
-        return
-      }
-      if (!this.contraseña) {
-        this.mostrarAlerta('La contraseña es obligatoria', 'error')
-        return
-      }
+    const data = await res.json()
 
+    if (data.correcto) {
+      mostrarAlerta(data.mensaje, 'success')
 
+      // Reset formulario
+      usuario.value = ''
+      email.value = ''
+      contraseña.value = ''
+      window.location.href="/login";
 
-        const res = await fetch('/api/usuarios_api.php', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            usuario: this.usuario,
-            email: this.email,
-            contraseña: this.contraseña
-          })
-        })
-
-        const data = await res.json()
-
-        if (data.correcto) {
-          this.mostrarAlerta(data.mensaje, 'success')
-
-
-          this.usuario = ''
-          this.email = ''
-          this.contraseña = ''
-        } 
-    
-          }
-      }
-  
-
+    } else {
+      mostrarAlerta(data.mensaje || 'Error al registrar usuario', 'error')
     }
 
-  
+  } catch (err) {
+    console.error(err)
+    mostrarAlerta('Error de conexión con el servidor', 'error')
+  }
+}
 </script>
+
 
 
