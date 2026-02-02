@@ -1,7 +1,7 @@
 <template>
   <div class="flex items-center justify-center grow bg-gray-100 fondo sm:py-10">
     
-    <div class="w-full max-w-6xl bg-gradient-to-r from-blue-400/70 to-purple-400/70 text-white size-100 font-black text-center rounded-lg border-black p-6 backdrop-blur-sm h-[600px]">
+    <div class="w-full max-w-6xl bg-gradient-to-r from-blue-400/70 to-purple-400/0 text-white size-100 font-black text-center rounded-lg border-black p-6 backdrop-blur-sm h-[600px]">
 
 
       <h4 class="text-3xl font-bold text-center mb-8">
