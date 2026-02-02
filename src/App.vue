@@ -25,7 +25,7 @@
               <router-link
                 to="/juegos"
                 :class="[
-                  'text-white text-xl font-bold rounded-3xl px-4 py-2 transition-colors',
+                  'text-white text-xl font-bold rounded-3xl px-4  transition-colors',
                   route.path === '/juegos'
                     ? 'shadow-inner lg:shadow-purple-700/50 shadow-blue-700/30 brightness-95 '
                     : 'hover:shadow-xl lg:shadow-purple-700/20 shadow-blue-700/30 cursor-pointer'
@@ -38,7 +38,7 @@
               <router-link
                 to="/eventos"
                 :class="[
-                  'text-white text-xl font-bold rounded-3xl px-4 py-2 transition-colors',
+                  'text-white text-xl font-bold rounded-3xl px-4  transition-colors',
                   route.path === '/eventos'
                     ? 'shadow-inner lg:shadow-purple-700/50 shadow-blue-700/30 brightness-95 '
                     : 'hover:shadow-xl lg:shadow-purple-700/20 shadow-blue-700/30 cursor-pointer'
@@ -51,7 +51,7 @@
               <router-link
                 to="/login"
                  :class="[
-                  'text-white text-xl font-bold rounded-3xl px-4 py-2 transition-colors',
+                  'text-white text-xl font-bold rounded-3xl px-4  transition-colors',
                   route.path === '/login'
                     ? 'shadow-inner shadow-purple-700/50 brightness-95 '
                     : 'hover:shadow-xl shadow-purple-700/30 cursor-pointer'
@@ -81,96 +81,49 @@
         <router-view />
       </main>
 
-      <footer class="h-[100px] p-5 bg-gray-500 flex">
-        <div>
-          <img
-            src="../img/ElorrietaFest.png"
-            alt="ElorrietaFest  "
-            class="h-14 w-auto"
-          />
-        </div>
+<footer class="h-[100px] p-5 bg-gray-500 relative flex items-center">
+  <!-- Logo a la izquierda -->
+  <div class="flex items-center">
+    <img src="../img/ElorrietaFest.png" alt="ElorrietaFest" class="h-14 w-auto" />
+  </div>
 
-        <div class="flex flex-col my-auto ms-auto">
-          <h3 class="mb-2 m-auto text-white font-blod text-xl">Enlaces</h3>
-          <div>
-            <ol class="flex gap-6">
-              <li>
-                <router-link
-                  to="/juegos"
-                  class="text-white text-blod hover:text-purple-700"
-                >
-                  Juegos
-                </router-link>
-              </li>
-              <li>
-                <router-link
-                  to="/eventos"
-                  class="text-white text-blod hover:text-purple-700"
-                >
-                  Eventos
-                </router-link>
-              </li>
-              <li v-if="!usuarioLogeado">
-                <router-link
-                  to="/login"
-                  class="text-white text-blod hover:text-purple-700"
-                  
-                >
-                  Login
-                </router-link>
-              </li>
-              <li v-if="usuarioLogeado">
-                <router-link
-                  to="/perfiles"
-                  class="text-white text-blod hover:text-purple-700"
-                  
-                >
-                  Perfil
-                </router-link>
-              </li>
-            </ol>
-          </div>
-        </div>
-        <div class="w-[200px] ms-auto my-auto flex flex-col gap-4">
-          <p class="m-auto">¡Siguenos!</p>
-          <div class="m-auto flex flex-row gap-x-4">
-            <!-- Facebook -->
-            <a
-              href="https://www.facebook.com"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <img
-                src="../img/facebook.png"
-                alt="Facebook"
-                class="h-[30px] w-auto hover:brightness-90 transition duration-200"
-              />
-            </a>
+  <!-- Enlaces centrados -->
+  <div class="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center">
+    <h3 class="mb-2 text-white font-bold text-xl">Enlaces</h3>
+    <ol class="flex gap-6">
+      <li>
+        <router-link to="/juegos" class="text-white font-bold hover:text-purple-700">Juegos</router-link>
+      </li>
+      <li>
+        <router-link to="/eventos" class="text-white font-bold hover:text-purple-700">Eventos</router-link>
+      </li>
+      <li v-if="!usuarioLogeado">
+        <router-link to="/login" class="text-white font-bold hover:text-purple-700">Login</router-link>
+      </li>
+      <li v-if="usuarioLogeado">
+        <router-link to="/perfiles" class="text-white font-bold hover:text-purple-700">Perfil</router-link>
+      </li>
+    </ol>
+  </div>
 
-            <!-- Instagram -->
-            <a
-              href="https://www.instagram.com"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <img
-                src="../img/instagram_10.png"
-                alt="Instagram"
-                class="h-[30px] w-auto hover:brightness-1000 transition duration-200"
-              />
-            </a>
+  <!-- Redes sociales a la derecha -->
+  <div class="ml-auto flex flex-col items-center gap-2">
+    <p class="text-white">¡Síguenos!</p>
+    <div class="flex gap-4">
+      <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer">
+        <img src="../img/facebook.png" alt="Facebook" class="h-7 w-auto hover:brightness-90 transition duration-200"/>
+      </a>
+      <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer">
+        <img src="../img/instagram_10.png" alt="Instagram" class="h-7 w-auto hover:brightness-1000 transition duration-200"/>
+      </a>
+      <a href="https://x.com" target="_blank" rel="noopener noreferrer">
+        <img src="../img/iconX.png" alt="X (Twitter)" class="h-7 w-auto hover:brightness-300 transition duration-200"/>
+      </a>
+    </div>
+  </div>
+</footer>
 
-            <!-- X / Twitter -->
-            <a href="https://x.com" target="_blank" rel="noopener noreferrer">
-              <img
-                src="../img/iconX.png"
-                alt="X (Twitter)"
-                class="h-[30px] w-auto hover:brightness-300 transition duration-200"
-              />
-            </a>
-          </div>
-        </div>
-      </footer>
+
     </div>
   </div>
 </template>
