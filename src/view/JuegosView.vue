@@ -1,41 +1,63 @@
 <template>
   <div class="flex items-center justify-center grow bg-gray-100 pt-30">
-    <div class="flex flex-col items-center min-h-screen p-4">
+    <div class="flex flex-col items-center min-h-screen p-4 mt-20 lg:mt-[5px]">
       <!-- Búsqueda -->
-      <div class="w-full flex justify-center mb-4">
+      <div class="w-full max-w-4xl mx-auto mb-4 md:mb-2 px-4">
         <input
           @input="juegosFiltrados"
           type="text"
           v-model="busqueda"
           placeholder="Buscar juego..."
-          class="border p-2 rounded w-285"
+          class="border p-2 rounded w-full"
         />
       </div>
 
       <!-- Lista de juegos -->
-      <div class="w-full max-w-6xl">
-        <ul class="grid grid-cols-3 gap-5">
+
+      <div class="w-full max-w-6xl px-20 md:m-5">
+        <ul
+          class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 justify-items-center"
+        >
           <li
             v-for="juego in juegos"
             :key="juego.id"
-            class="border p-2 rounded shadow hover:shadow-lg transition cursor-pointer"
             @click="abrirModal(juego)"
+            class="bg-gray-100 p-5 rounded-xl shadow-md hover:shadow-xl transition-shadow duration-300 w-full sm:max-w-[500px] lg:max-w-none"
           >
-            <div>
+            <!-- TARJETA INTERIOR -->
+            <div
+              class="rounded-lg overflow-hidden flex flex-col bg-white h-full min-h-[300px]"
+            >
+              <!-- Imagen -->
               <img
+                v-if="juego.imagen"
                 :src="'../../gamefest_resources/games/' + juego.imagen"
                 :alt="'Imagen de ' + juego.titulo"
-                class="w-full h-40 object-cover rounded"
+                class="w-full h-48 object-cover"
               />
+
+              <!-- Datos -->
+              <div class="p  flex flex-col gap-2 flex-1">
+                <strong class="text-xl">{{ juego.titulo }}</strong>
+
+                <div
+                  class="text-gray-600 text-sm grid grid-cols-2 "
+                >
+                  <div>
+                    <span class="font-medium">Plataforma:</span>
+                    {{ JSON.parse(juego.plataformas).join(", ") }}
+                  </div>
+                  <div>
+                    <span class="font-medium">Género:</span> {{ juego.genero }}
+                  </div>
+
+                  <div class="col-span-2">
+                    <span class="font-medium">Descripción:</span>
+                    {{ juego.descripcion }}
+                  </div>
+                </div>
+              </div>
             </div>
-            <h3 class="font-sans md:font-serif">Titulo: {{ juego.titulo }}</h3>
-            <p class="font-sans md:font-serif">
-              Plataforma: {{ JSON.parse(juego.plataformas).join(", ") }}
-            </p>
-            <p class="font-sans md:font-serif">Género: {{ juego.genero }}</p>
-            <p class="font-sans md:font-serif">
-              Descripción: {{ juego.descripcion }}
-            </p>
           </li>
         </ul>
       </div>
@@ -64,7 +86,9 @@
           <div class="p-5">
             <img
               v-if="juegoSeleccionado"
-              :src="'../../gamefest_resources/games/' + juegoSeleccionado.imagen"
+              :src="
+                '../../gamefest_resources/games/' + juegoSeleccionado.imagen
+              "
               :alt="juegoSeleccionado.titulo"
               class="w-full h-64 object-cover rounded-lg"
             />
@@ -110,7 +134,7 @@ async function cargarJuegos() {
 async function juegosFiltrados() {
   const query = busqueda.value.trim();
   const res = await fetch(
-    `/api/juegos_api.php?query=${encodeURIComponent(query)}`
+    `/api/juegos_api.php?query=${encodeURIComponent(query)}`,
   );
   juegos.value = await res.json();
 }
