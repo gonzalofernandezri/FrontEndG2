@@ -1,7 +1,7 @@
 <template>
   <div class="flex items-center justify-center grow bg-gray-100 fondo sm:py-10">
     
-    <div class="w-full max-w-6xl bg-gradient-to-r from-blue-400/50 to-purple-400/50 text-white size-100 font-black text-center rounded-lg border-black p-6 backdrop-blur-sm">
+    <div class="w-full max-w-6xl bg-gradient-to-r from-blue-400/50 to-purple-400/50 text-white size-100 font-black text-center rounded-lg border-black p-6 backdrop-blur-sm h-[600px]">
 
 
       <h4 class="text-3xl font-bold text-center mb-8">
@@ -54,7 +54,7 @@
         </div>
 
         <!-- COLUMNA DERECHA -->
-        <div class="md:col-span-2">
+        <div class="md:col-span-2 flex flex-col h-[445px]">
 
           <h3 class="text-2xl font-bold mb-4 text-white">
             Mis eventos
@@ -149,6 +149,9 @@
 
 
 <script setup>
+
+import Swal from 'sweetalert2';
+
   import { ref, onMounted } from "vue";
 
   const roluser = ref(null);
@@ -215,16 +218,33 @@
 
   }
 
-  async function cerrarSesion() {
-    localStorage.clear("loggedin_in", "role", "username", "user_id");
-    window.location.reload();
-    window.location.href="/principal";
+async function cerrarSesion() {
+  await mostrarAlerta('Sesión cerrada correctamente', 'success');
 
-  }
+  localStorage.clear();
+  window.location.href = "/principal";
+}
+
 
   onMounted(mostrarEventos)
   onMounted(rol)
   onMounted(cargarUsuario);
+
+function mostrarAlerta(titulo, tipo) {
+  return Swal.fire({
+    title: titulo,
+    icon: tipo,
+    background: '#1e1e2f',
+    color: '#f5f5f5',
+    confirmButtonColor: '#4f46e5',
+    confirmButtonText: 'Aceptar'
+  });
+}
+
+
+
+  
+
     
 </script>
 

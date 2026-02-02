@@ -10,8 +10,9 @@
               <img
                 src="../img/ElorrietaFest.png"
                 alt="logo"
-                class="h-14 w-auto"
+                class="h-14 w-auto bg-white/10  rounded-md ml-12"
               />
+
             </router-link>
 
             <h1 class="text-white text-2xl font-bold text-center md:text-left">
