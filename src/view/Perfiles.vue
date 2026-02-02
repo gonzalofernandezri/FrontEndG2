@@ -1,7 +1,7 @@
 <template>
   <div class="flex items-center justify-center grow bg-gray-100 fondo sm:py-10">
     
-    <div class="w-full max-w-6xl bg-gradient-to-r from-blue-400/50 to-purple-400/50 text-white size-100 font-black text-center rounded-lg border-black p-6 backdrop-blur-sm h-[600px]">
+    <div class="w-full max-w-6xl bg-gradient-to-r from-blue-400/60 to-purple-400/60 text-white size-100 font-black text-center rounded-lg border-black p-6 backdrop-blur-sm h-[600px]">
 
 
       <h4 class="text-3xl font-bold text-center mb-8">
@@ -36,7 +36,7 @@
             </p>
 
             <button
-              class="mt-4 bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 rounded shadow"
+              class="mt-4 bg-white hover:bg-gray-100 text-gray-700 font-semibold py-2 px-4 rounded shadow"
               @click="cerrarSesion"
             >
               Cerrar sesión
@@ -54,31 +54,43 @@
         </div>
 
         <!-- COLUMNA DERECHA -->
-        <div class="md:col-span-2 flex flex-col h-[445px]">
+            <div class="md:col-span-2 flex flex-col h-[380px]">
 
-          <h3 class="text-2xl font-bold mb-4 text-white">
-            Mis eventos
-          </h3>
+              <h3 class="text-2xl font-bold mb-4 text-white">
+                Mis eventos
+              </h3>
 
-          <ul
-            v-if="eventos.length"
-            class="bg-white rounded-lg divide-y text-gray-800 max-h-100 overflow-y-auto"
-          >
-            <li
-              v-for="evento in eventos"
-              :key="evento.id"
-              class="p-4 flex justify-between items-center hover:bg-gray-50 h-25"
-            >
-              <div @click="abrirModal(evento)">
-                <p class="font-semibold">
+        <ul
+          v-if="eventos.length"
+          class="bg-white/90 rounded-lg divide-y text-white-800 h-[335px] overflow-y-auto">
+          <li
+            v-for="evento in eventos"
+            :key="evento.id"
+            class="p-4 hover:bg-white-50">
+            <div
+              class="flex items-center gap-4 cursor-pointer"
+              @click="abrirModal(evento)">
+           
+              <img
+                v-if="evento.imagen"
+                :src="`/gamefest_resources/events/${evento.imagen}`"
+                alt="Imagen del evento"
+                class="w-35 h-20 object-cover rounded-lg shrink-0"/>
+
+              
+              <div class="flex flex-col">
+                <p class="font-semibold text-gray-700">
                   {{ evento.titulo }}
                 </p>
-                <p class="text-sm text-gray-600">
+
+                <p class="text-sm text-gray-700">
                   {{ evento.fecha }} · {{ evento.hora }} · {{ evento.tipo }}
                 </p>
               </div>
-            </li>
-          </ul>
+            </div>
+          </li>
+        </ul>
+
 
           <p
             v-else
@@ -113,7 +125,7 @@
 
             <!-- Contenido del modal -->
             <div class="p-6 flex flex-col gap-4 p-5">
-              <div class="text-sm text-gray-600 grid grid-cols-2 gap-2">
+              <div class="text-sm text-gray-700 grid grid-cols-2 gap-2">
                 <div><strong>Tipo:</strong> {{ eventoSeleccionado.tipo }}</div>
                 <div><strong>Plazas:</strong> {{ eventoSeleccionado.plazasLibres }}</div>
                 <div><strong>Fecha:</strong> {{ eventoSeleccionado.fecha }}</div>
@@ -226,6 +238,7 @@ async function cerrarSesion() {
 }
 
 
+  
   onMounted(mostrarEventos)
   onMounted(rol)
   onMounted(cargarUsuario);
