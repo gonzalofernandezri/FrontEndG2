@@ -87,94 +87,89 @@
 </template>
 
 
-<script>
-
+<script setup>
+import { ref } from 'vue'
 import Swal from 'sweetalert2'
 
-export default {
-  data() {
-    return {
-      titulo: '',
-      tipo: '',
-      fecha: '',
-      hora: '',
-      plazas: '',
-      imagen: '',
-      descripcion: '',
-      createdby: 1
-    }
-  },
+// Estado (antes data())
+const titulo = ref('')
+const tipo = ref('')
+const fecha = ref('')
+const hora = ref('')
+const plazas = ref('')
+const imagen = ref('')
+const descripcion = ref('')
+const createdby = ref(1)
 
-  methods: {
-    mostrarAlerta(titulo, tipo = 'info') {
-      Swal.fire({
-        title: titulo,
-        icon: tipo, // success, error, warning, info
-        background: '#1e1e2f',
-        color: '#f5f5f5',
-        confirmButtonColor: '#4f46e5'
-      })
-    },
+// Métodos
+function mostrarAlerta(tituloMsg, tipoMsg = 'info') {
+  Swal.fire({
+    title: tituloMsg,
+    icon: tipoMsg,
+    background: '#1e1e2f',
+    color: '#f5f5f5',
+    confirmButtonColor: '#4f46e5'
+  })
+}
 
-    async crearEvento() {
-      // 🔍 Validaciones
-      if (!this.titulo) {
-        this.mostrarAlerta('El título es obligatorio', 'error')
-        return
-      }
-
-      if (!this.tipo) {
-        this.mostrarAlerta('El tipo es obligatorio', 'error')
-        return
-      }
-
-      if (!this.fecha) {
-        this.mostrarAlerta('La fecha es obligatoria', 'error')
-        return
-      }
-
-      if (!this.hora) {
-        this.mostrarAlerta('La hora es obligatoria', 'error')
-        return
-      }
-
-      if (!this.plazas || this.plazas <= 0) {
-        this.mostrarAlerta('Las plazas deben ser mayores que 0', 'error')
-        return
-      } 
-
-     
-        const res = await fetch('/api/crearEvento_api.php', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            titulo: this.titulo,
-            tipo: this.tipo,
-            fecha: this.fecha,
-            hora: this.hora,
-            plazas: this.plazas,
-            imagen: this.imagen,
-            descripcion: this.descripcion,
-            createdby: this.createdby
-            
-              
-          })
-           
-        })
-
-   
-        const data = await res;
-        console.log(data);
-
-      
-      }
-    }
+async function crearEvento() {
+  // 🔍 Validaciones
+  if (!titulo.value) {
+    mostrarAlerta('El título es obligatorio', 'error')
+    return
   }
 
+  if (!tipo.value) {
+    mostrarAlerta('El tipo es obligatorio', 'error')
+    return
+  }
 
+  if (!fecha.value) {
+    mostrarAlerta('La fecha es obligatoria', 'error')
+    return
+  }
 
+  if (!hora.value) {
+    mostrarAlerta('La hora es obligatoria', 'error')
+    return
+  }
 
-  
+  if (!plazas.value || plazas.value <= 0) {
+    mostrarAlerta('Las plazas deben ser mayores que 0', 'error')
+    return
+  }
+
+  try {
+    const res = await fetch('/api/crearEvento_api.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include', // 👈 ENVÍA LA COOKIE DE SESIÓN
+      body: JSON.stringify({
+        titulo: titulo.value,
+        tipo: tipo.value,
+        fecha: fecha.value,
+        hora: hora.value,
+        plazas: plazas.value,
+        imagen: imagen.value,
+        descripcion: descripcion.value
+      })
+    })
+
+    const data = await res.json()
+    console.log(data)
+
+    if (data.success) {
+      mostrarAlerta('Evento creado correctamente', 'success')
+    } else {
+      mostrarAlerta(data.message || 'Error al crear el evento', 'error')
+    }
+
+  } catch (err) {
+    console.error(err)
+    mostrarAlerta('Error de conexión con el servidor', 'error')
+  }
+}
 </script>
+
 
 
