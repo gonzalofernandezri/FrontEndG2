@@ -71,6 +71,7 @@ async function login() {
       localStorage.setItem('username', data.username)
       localStorage.setItem('role', data.role)       
       localStorage.setItem('logged_in', 'true')
+      window.location.href="/perfiles";
     } else {
       mostrarAlerta(data.message || 'Error al iniciar sesión', 'error')
     }
