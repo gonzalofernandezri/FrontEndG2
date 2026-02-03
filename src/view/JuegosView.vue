@@ -1,5 +1,5 @@
 <template>
-  <div class="flex items-center justify-center grow bg-purple-200 pt-30">
+  <div class="flex items-center justify-center grow bg-white pt-30">
     <div class="flex flex-col items-center min-h-screen p-4 mt-20 lg:mt-[5px]">
       <!-- Búsqueda -->
       <div class="w-full max-w-4xl mx-auto mb-4 md:mb-2 px-4">
@@ -29,21 +29,21 @@
           >
             <!-- TARJETA INTERIOR -->
             <div
-              class="rounded-lg overflow-hidden flex flex-col h-full min-h-[300px] p-2 bg-gradient-to-tr bg-white text-black "
+              class="rounded-lg overflow-hidden flex flex-col h-full min-h-[300px] p-2 bg-gradient-to-tr bg-gray-400 "
             >
               <!-- Imagen -->
               <img
                 v-if="juego.imagen"
                 :src="'../../gamefest_resources/games/' + juego.imagen"
                 :alt="'Imagen de ' + juego.titulo"
-                class="w-full h-50 object-cover rounded-lg mb-2"
+                class="w-full h-50 object-cover rounded-lg mb-2  "
               />
 
               <!-- Datos -->
-              <div class="flex flex-col gap-2 flex-1 text-black">
+              <div class="flex flex-col gap-2 flex-1 text-white">
                 <strong class="text-xl">{{ juego.titulo }}</strong>
 
-                <div class="text-black text-sm grid grid-cols-2 gap-2">
+                <div class="text-white text-sm grid grid-cols-2 gap-2">
                   <div>
                     <span class="font-medium">Plataforma:</span>
                     {{ JSON.parse(juego.plataformas).join(", ") }}
@@ -72,7 +72,7 @@
         @click.self="cerrarModal"
       >
         <div
-          class=" bg-purple-300 text-white rounded-lg w-full max-w-md shadow-lg overflow-hidden transform transition-transform duration-200 scale-95 relative "
+          class=" bg-gray-600 text-white rounded-lg w-full max-w-md shadow-lg overflow-hidden transform transition-transform duration-200 scale-95 relative "
         >
           <!-- Botón cerrar -->
           

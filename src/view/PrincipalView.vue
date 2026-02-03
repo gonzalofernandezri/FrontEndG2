@@ -6,7 +6,7 @@
       <h4 class="text-3xl font-bold text-sm md:text-lg lg:text-2xl">
         ¡BIENVENIDO/A A ElorrietaFest!
       </h4>
-      <div class="flex flex-col items-center   sm:flex-col">
+      <div class="flex flex-col items-center sm:flex-col ">
         <div class="flex flex-row ">
         <router-link
           to="/juegos"
