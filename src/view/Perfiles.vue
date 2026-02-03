@@ -1,164 +1,170 @@
 <template>
-  <div class="flex items-center justify-center grow bg-gray-100 fondo sm:py-10">
+  <div class="flex items-center justify-center grow fondo sm:py-10">
     
-    <div class="w-full max-w-6xl bg-gradient-to-r from-blue-400/70 to-purple-400/70 text-white size-100 font-black text-center rounded-lg border-black p-6 backdrop-blur-sm h-[600px]">
 
+    <!-- contenedor prinicipal -->
+    <div
+    
+      class="w-full max-w-6xl bg-gradient-to-r from-blue-500/80 to-purple-500/80 backdrop-blur-md rounded-2xl shadow-2xl p-8 text-white">
+      
 
-      <h4 class="text-3xl font-bold text-center mb-8">
+      <h4 class="text-3xl md:text-4xl font-extrabold text-center mb-10 tracking-wide">
         ¡BIENVENIDO/A A ElorrietaFest!
       </h4>
 
-      <!-- GRID PRINCIPAL -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <!-- grid principal -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
 
-        <!-- ⬅COLUMNA IZQUIERDA -->
-        <div class="md:col-span-1 flex flex-col gap-4">
+        <!-- col izuqierda -->
+        <div class="md:col-span-1 flex flex-col items-center gap-4">
 
+          <!-- si no esta logeuado -->
           <div v-if="!usuarioLogeado" class="text-center">
-            <span>No tienes cuenta?</span>
+            <span>¿No tienes cuenta?</span>
             <router-link
               to="/usuarios"
-              class="ml-2 underline hover:text-blue-900"
-            >
+              class="ml-2 underline hover:text-blue-900">
               Regístrate
             </router-link>
           </div>
 
-          <div v-else class="text-center flex flex-col gap-3">
-            <p class="font-semibold">
-              Hola, {{ usuario?.username }}
+          <!-- perfil -->
+          <div v-else class="flex flex-col items-center gap-3 text-center">
+
+            <!-- avatar -->
+            <div class="w-20 h-20 rounded-full bg-white/30 flex items-center justify-center text-3xl font-bold">
+              {{ usuario?.username.charAt(0).toUpperCase() }}
+            </div>
+
+            <p class="text-lg font-semibold">
+              {{ usuario?.username }}
             </p>
-            <p class="text-sm">
-              Rol: {{ usuario?.role }}
-            </p>
-            <p class="text-sm">
+
+            <span class="text-xs bg-black/30 px-3 py-1 rounded-full">
+              {{ usuario?.role }}
+            </span>
+
+            <p class="text-sm opacity-80">
               {{ usuario?.email }}
             </p>
 
             <button
-              class="mt-4 bg-white hover:bg-gray-100 text-gray-700 font-semibold py-2 px-4 rounded shadow"
-              @click="cerrarSesion"
-            >
+              class="mt-4 bg-white text-gray-800 font-semibold py-2 px-4 rounded-lg
+                     hover:bg-gray-200 transition"
+              @click="cerrarSesion">
               Cerrar sesión
             </button>
 
             <router-link
               v-if="roluser === 'ADMIN'"
               to="/crearEvento"
-              class="bg-purple-300 text-white font-bold rounded p-3 hover:bg-purple-500 text-center"
-            >
+              class="mt-2 bg-purple-600 text-white font-semibold rounded-lg px-4 py-2
+                     hover:bg-purple-700 transition text-center">
               Crear eventos
             </router-link>
           </div>
-
         </div>
 
-        <!-- COLUMNA DERECHA -->
-            <div class="md:col-span-2 flex flex-col h-[380px]">
+        <!-- col derecha -->
+        <div class="md:col-span-2 flex flex-col">
 
-              <h3 class="text-2xl font-bold mb-4 text-white">
-                Mis eventos
-              </h3>
+          <h3 class="text-2xl font-bold mb-4">
+            Mis eventos
+          </h3>
 
-        <ul
-          v-if="eventos.length"
-          class="bg-white/90 rounded-lg divide-y text-white-800 h-[335px] overflow-y-auto">
-          <li
-            v-for="evento in eventos"
-            :key="evento.id"
-            class="p-4 hover:bg-white-50">
-            <div
-              class="flex items-center gap-4 cursor-pointer"
+          <!--lista de eventos -->
+          <ul
+            v-if="eventos.length"
+            class="bg-white/20 rounded-xl divide-y divide-white/20
+                   h-[350px] overflow-y-auto">
+
+            <li
+              v-for="evento in eventos"
+              :key="evento.id"
+              class="p-4 transition hover:bg-white/20 cursor-pointer"
               @click="abrirModal(evento)">
-           
-              <img
-                v-if="evento.imagen"
-                :src="`/gamefest_resources/events/${evento.imagen}`"
-                alt="Imagen del evento"
-                class="w-35 h-20 object-cover rounded-lg shrink-0"/>
 
-              
-              <div class="flex flex-col">
-                <p class="font-semibold text-gray-700">
-                  {{ evento.titulo }}
-                </p>
+              <div class="flex items-center gap-4">
 
-                <p class="text-sm text-gray-700">
-                  {{ evento.fecha }} · {{ evento.hora }} · {{ evento.tipo }}
-                </p>
+                <img
+                  v-if="evento.imagen"
+                  :src="`/gamefest_resources/events/${evento.imagen}`"
+                  class="w-28 h-20 object-cover rounded-lg shadow-md"/>
+
+                <div class="flex flex-col gap-1">
+                  <p class="font-semibold text-white text-lg">
+                    {{ evento.titulo }}
+                  </p>
+
+                  <span class="text-sm bg-black/30 w-fit px-2 py-1 rounded">
+                    {{ evento.fecha }} · {{ evento.hora }}
+                  </span>
+
+                  <span class="text-xs opacity-80">
+                    {{ evento.tipo }}
+                  </span>
+                </div>
               </div>
-            </div>
-          </li>
-        </ul>
+            </li>
+          </ul>
 
-
-          <p
-            v-else
-            class="text-white mt-4"
-          >
+          <p v-else class="mt-4 opacity-80">
             No estás apuntado a ningún evento todavía.
           </p>
-
         </div>
-
       </div>
-      <!-- MODAL -->
-        <div 
-          v-if="eventoSeleccionado"
-          class="fixed inset-0 bg-black/50 flex items-center justify-center z-50"
-          @click.self="cerrarModal"
-        >
-          <div class="bg-white rounded-lg w-full max-w-md shadow-lg overflow-hidden ">
-            <h2 class="text-2xl font-bold p-5 text-black">
-                {{ eventoSeleccionado.titulo }}
-            </h2>
-            
-            <!-- Imagen del evento -->
-            <div class="p-5">
-              <img 
-                v-if="eventoSeleccionado.imagen"
-                :src="`/gamefest_resources/events/${eventoSeleccionado.imagen}`"
-                alt="Imagen del evento"
-                class="w-full h-48 object-cover rounded-lg"
-              />
-            </div>
 
-            <!-- Contenido del modal -->
-            <div class="p-6 flex flex-col gap-4 p-5">
-              <div class="text-sm text-gray-700 grid grid-cols-2 gap-2">
-                <div><strong>Tipo:</strong> {{ eventoSeleccionado.tipo }}</div>
-                <div><strong>Plazas:</strong> {{ eventoSeleccionado.plazasLibres }}</div>
-                <div><strong>Fecha:</strong> {{ eventoSeleccionado.fecha }}</div>
-                <div><strong>Hora:</strong> {{ eventoSeleccionado.hora }}</div>
-              </div>
+      <!-- modal -->
+      <div
+        v-if="eventoSeleccionado"
+        class="fixed inset-0 bg-black/50 flex items-center justify-center z-50"
+        @click.self="cerrarModal">
 
-              <p class="text-gray-700">
-                {{ eventoSeleccionado.descripcion }}
-              </p>
+        <div class="bg-white rounded-2xl w-full max-w-md shadow-2xl overflow-hidden">
 
-              <div class="flex justify-between">
-                <button 
-                  @click="desapuntar"
-                  class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-                >
-                  Desapuntarme
-                </button>
-                <button 
-                  @click="cerrarModal"
-                  class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-                >
-                  Cerrar
-                </button> 
-              </div>
+          <h2 class="text-2xl font-bold p-5 text-black">
+            {{ eventoSeleccionado.titulo }}
+          </h2>
 
-            </div>
+          <div class="p-5">
+            <img
+              v-if="eventoSeleccionado.imagen"
+              :src="`/gamefest_resources/events/${eventoSeleccionado.imagen}`"
+              class="w-full h-48 object-cover rounded-lg"/>
           </div>
 
+          <div class="p-5 flex flex-col gap-4">
+            <div class="text-sm text-gray-700 grid grid-cols-2 gap-2">
+              <div><strong>Tipo:</strong> {{ eventoSeleccionado.tipo }}</div>
+              <div><strong>Plazas:</strong> {{ eventoSeleccionado.plazasLibres }}</div>
+              <div><strong>Fecha:</strong> {{ eventoSeleccionado.fecha }}</div>
+              <div><strong>Hora:</strong> {{ eventoSeleccionado.hora }}</div>
+            </div>
+
+            <p class="text-gray-700">
+              {{ eventoSeleccionado.descripcion }}
+            </p>
+
+            <div class="flex justify-between">
+              <button
+                @click="desapuntar"
+                class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition">
+                Desapuntarme
+              </button>
+
+              <button
+                @click="cerrarModal"
+                class="bg-gray-300 text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-400 transition">
+                Cerrar
+              </button>
+            </div>
+          </div>
         </div>
+      </div>
+
     </div>
   </div>
 </template>
-
 
 <script setup>
 
@@ -265,7 +271,7 @@ import Swal from 'sweetalert2';
     window.location.href = "/principal";
 
   } catch (err) {
-    console.error("Error cerrando sesión:", err);
+    mostrarAlerta("Error cerrando sesión:", err);
   }
 }
 
@@ -293,7 +299,4 @@ function mostrarAlerta(titulo, tipo) {
 
 <style>
 
-.fondo {
-  background-image: url("../../img/aaa.png");
-}
 </style>
