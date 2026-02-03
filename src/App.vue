@@ -1,18 +1,17 @@
 <template>
   <div class="flex min-h-screen w-screen">
     <div class="grow flex flex-col">
-      <header class="w-full px-5">
+      <header class="w-full px-5 z-50">
         <nav
-          class="fixed top-5 left-1/2 -translate-x-1/2 w-[calc(100%-40px)] border rounded-full p-5 flex flex-col md:flex-row items-center md:justify-between gap-2 md:gap-0"
+          class="fixed top-5 left-1/2 -translate-x-1/2 w-[calc(100%-40px)] shadow-xl shadow-purple-500/50  rounded-full p-5 flex flex-col md:flex-row items-center md:justify-between gap-2 md:gap-0"
         >
           <div class="flex flex-col sm:flex-row items-center gap-4 md:gap-5">
             <router-link to="/principal">
               <img
                 src="../img/ElorrietaFest.png"
                 alt="logo"
-                class="h-14 w-auto bg-white/10  rounded-md ml-12"
+                class="h-14 w-auto bg-white/10 rounded-md ml-12"
               />
-
             </router-link>
 
             <h1 class="text-white text-2xl font-bold text-center md:text-left">
@@ -20,15 +19,15 @@
             </h1>
           </div>
 
-          <ol class="flex flex-wrap justify-center md:flex gap-4 md:gap-6">
+          <ol class="flex flex-wrap justify-center md:flex gap-4 md:gap-6 ">
             <li>
               <router-link
                 to="/juegos"
                 :class="[
-                  'text-white text-xl font-bold rounded-3xl px-4  transition-colors',
+                  ' text-xl font-bold rounded-3xl px-4 py-2 transition-colors',
                   route.path === '/juegos'
-                    ? 'shadow-inner lg:shadow-purple-700/50 shadow-blue-700/30 brightness-95 '
-                    : 'hover:shadow-xl lg:shadow-purple-700/20 shadow-blue-700/30 cursor-pointer'
+                    ? 'text-purple-700/70  shadow-inner lg:shadow-purple-700/50 shadow-blue-700/30  '
+                    : 'text-white hover:shadow-xl hover:text-purple-700 lg:shadow-purple-700/20 shadow-blue-700/30 cursor-pointer',
                 ]"
               >
                 Juegos
@@ -38,10 +37,10 @@
               <router-link
                 to="/eventos"
                 :class="[
-                  'text-white text-xl font-bold rounded-3xl px-4  transition-colors',
+                  ' text-xl font-bold rounded-3xl px-4 py-2 transition-colors',
                   route.path === '/eventos'
-                    ? 'shadow-inner lg:shadow-purple-700/50 shadow-blue-700/30 brightness-95 '
-                    : 'hover:shadow-xl lg:shadow-purple-700/20 shadow-blue-700/30 cursor-pointer'
+                    ? 'text-purple-700/70 shadow-inner lg:shadow-purple-700/50 shadow-blue-700/30  '
+                    : 'hover:text-purple-700 text-white hover:shadow-xl lg:shadow-purple-700/20 shadow-blue-700/30 cursor-pointer',
                 ]"
               >
                 Eventos
@@ -50,11 +49,11 @@
             <li>
               <router-link
                 to="/login"
-                 :class="[
-                  'text-white text-xl font-bold rounded-3xl px-4  transition-colors',
+                :class="[
+                  ' text-xl font-bold rounded-3xl px-4 py-2 transition-colors',
                   route.path === '/login'
-                    ? 'shadow-inner shadow-purple-700/50 brightness-95 '
-                    : 'hover:shadow-xl shadow-purple-700/30 cursor-pointer'
+                    ? 'text-purple-700/70 shadow-inner shadow-purple-700/50  '
+                    : 'hover:text-purple-700 text-white hover:shadow-xl shadow-purple-700/30 cursor-pointer',
                 ]"
                 v-if="!usuarioLogeado"
               >
@@ -62,11 +61,11 @@
               </router-link>
               <router-link
                 to="/perfiles"
-                 :class="[
-                  'text-white text-xl font-bold rounded-3xl px-4 py-2 transition-colors',
+                :class="[
+                  ' text-xl font-bold rounded-3xl px-4 py-2 transition-colors',
                   route.path === '/perfiles'
-                    ? 'shadow-inner shadow-purple-700/50 brightness-95'
-                    : 'hover:shadow-xl shadow-purple-700/30 cursor-pointer'
+                    ? 'text-purple-700/70 shadow-inner shadow-purple-700/50 brightness-95'
+                    : 'hover:text-purple-700 text-white hover:shadow-xl  shadow-purple-700/30 cursor-pointer',
                 ]"
                 v-if="usuarioLogeado"
               >
@@ -81,64 +80,104 @@
         <router-view />
       </main>
 
-<footer class="h-[100px] p-5 bg-gray-500 relative flex items-center">
-  <!-- Logo a la izquierda -->
-  <div class="flex items-center">
-    <img src="../img/ElorrietaFest.png" alt="ElorrietaFest" class="h-14 w-auto" />
-  </div>
+      <footer class="h-[100px] p-5 bg-gray-500 relative flex items-center">
+        <!-- Logo a la izquierda -->
+        <div class="flex items-center">
+          <img
+            src="../img/ElorrietaFest.png"
+            alt="ElorrietaFest"
+            class="h-14 w-auto"
+          />
+        </div>
 
-  <!-- Enlaces centrados -->
-  <div class="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center">
-    <h3 class="mb-2 text-white font-bold text-xl">Enlaces</h3>
-    <ol class="flex gap-6">
-      <li>
-        <router-link to="/juegos" class="text-white font-bold hover:text-purple-700">Juegos</router-link>
-      </li>
-      <li>
-        <router-link to="/eventos" class="text-white font-bold hover:text-purple-700">Eventos</router-link>
-      </li>
-      <li v-if="!usuarioLogeado">
-        <router-link to="/login" class="text-white font-bold hover:text-purple-700">Login</router-link>
-      </li>
-      <li v-if="usuarioLogeado">
-        <router-link to="/perfiles" class="text-white font-bold hover:text-purple-700">Perfil</router-link>
-      </li>
-    </ol>
-  </div>
+        <!-- Enlaces centrados -->
+        <div
+          class="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center"
+        >
+          <h3 class="mb-2 text-white font-bold text-xl">Enlaces</h3>
+          <ol class="flex gap-6">
+            <li>
+              <router-link
+                to="/juegos"
+                class="text-white font-bold hover:text-purple-700"
+                >Juegos</router-link
+              >
+            </li>
+            <li>
+              <router-link
+                to="/eventos"
+                class="text-white font-bold hover:text-purple-700"
+                >Eventos</router-link
+              >
+            </li>
+            <li v-if="!usuarioLogeado">
+              <router-link
+                to="/login"
+                class="text-white font-bold hover:text-purple-700"
+                >Login</router-link
+              >
+            </li>
+            <li v-if="usuarioLogeado">
+              <router-link
+                to="/perfiles"
+                class="text-white font-bold hover:text-purple-700"
+                >Perfil</router-link
+              >
+            </li>
+          </ol>
+        </div>
 
-  <!-- Redes sociales a la derecha -->
-  <div class="ml-auto flex flex-col items-center gap-2">
-    <p class="text-white">¡Síguenos!</p>
-    <div class="flex gap-4">
-      <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer">
-        <img src="../img/facebook.png" alt="Facebook" class="h-7 w-auto hover:brightness-90 transition duration-200"/>
-      </a>
-      <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer">
-        <img src="../img/instagram_10.png" alt="Instagram" class="h-7 w-auto hover:brightness-1000 transition duration-200"/>
-      </a>
-      <a href="https://x.com" target="_blank" rel="noopener noreferrer">
-        <img src="../img/iconX.png" alt="X (Twitter)" class="h-7 w-auto hover:brightness-300 transition duration-200"/>
-      </a>
-    </div>
-  </div>
-</footer>
-
-
+        <!-- Redes sociales a la derecha -->
+        <div class="ml-auto flex flex-col items-center gap-2">
+          <p class="text-white">¡Síguenos!</p>
+          <div class="flex gap-4">
+            <a
+              href="https://www.facebook.com"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img
+                src="../img/facebook.png"
+                alt="Facebook"
+                class="h-7 w-auto hover:brightness-90 transition duration-200"
+              />
+            </a>
+            <a
+              href="https://www.instagram.com"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img
+                src="../img/instagram_10.png"
+                alt="Instagram"
+                class="h-7 w-auto hover:brightness-1000 transition duration-200"
+              />
+            </a>
+            <a href="https://x.com" target="_blank" rel="noopener noreferrer">
+              <img
+                src="../img/iconX.png"
+                alt="X (Twitter)"
+                class="h-7 w-auto hover:brightness-300 transition duration-200"
+              />
+            </a>
+          </div>
+        </div>
+      </footer>
     </div>
   </div>
 </template>
 
 <script setup>
-import { useRoute } from 'vue-router'
+import { useRoute } from "vue-router";
 import { ref, onMounted } from "vue";
 
-const route = useRoute()
+const route = useRoute();
 const usuarioLogeado = ref(false);
 
 async function ocultarLogin() {
   try {
     const res = await fetch("/api/perfil_api.php", {
-      credentials: "include" // envía la cookie de sesión PHP
+      credentials: "include", // envía la cookie de sesión PHP
     });
 
     const data = await res.json();
@@ -148,7 +187,6 @@ async function ocultarLogin() {
     } else {
       usuarioLogeado.value = false;
     }
-
   } catch (err) {
     console.error("Error comprobando sesión:", err);
     usuarioLogeado.value = false;
@@ -170,6 +208,8 @@ nav {
     var(--color-blue-500),
     var(--color-purple-400)
   );
+  
+  
 }
 
 footer {

@@ -1,5 +1,5 @@
 <template>
-  <div class="flex items-center justify-center grow bg-gray-100 pt-30">
+  <div class="flex items-center justify-center grow bg-purple-200 pt-30">
     <div class="flex flex-col items-center min-h-screen p-4 mt-20 lg:mt-[5px]">
       <!-- Búsqueda -->
       <div class="w-full max-w-4xl mx-auto mb-4 md:mb-2 px-4">
@@ -8,12 +8,11 @@
           type="text"
           v-model="busqueda"
           placeholder="Buscar juego..."
-          class="border p-2 rounded w-full"
+          class="border border-black p-2 rounded w-full  text-black"
         />
       </div>
 
       <!-- Lista de juegos -->
-
       <div class="w-full max-w-6xl px-20 md:m-5">
         <ul
           class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 justify-items-center"
@@ -22,27 +21,29 @@
             v-for="juego in juegos"
             :key="juego.id"
             @click="abrirModal(juego)"
-            class="bg-gray-100 p-5 rounded-xl shadow-md hover:shadow-xl transition-shadow duration-300 w-full sm:max-w-[500px] lg:max-w-none"
+            :class="[
+              'rounded-xl transition-transform duration-300 w-full sm:max-w-[500px] lg:max-w-none',
+              'border-2 border-transparent shadow-md',
+              'hover:scale-105 hover:shadow-2xl hover:border-purple-400 hover:bg-purple-50/20',
+            ]"
           >
             <!-- TARJETA INTERIOR -->
             <div
-              class="rounded-lg overflow-hidden flex flex-col bg-white h-full min-h-[300px]"
+              class="rounded-lg overflow-hidden flex flex-col h-full min-h-[300px] p-2 bg-gradient-to-tr bg-white text-black "
             >
               <!-- Imagen -->
               <img
                 v-if="juego.imagen"
                 :src="'../../gamefest_resources/games/' + juego.imagen"
                 :alt="'Imagen de ' + juego.titulo"
-                class="w-full h-48 object-cover"
+                class="w-full h-50 object-cover rounded-lg mb-2"
               />
 
               <!-- Datos -->
-              <div class="p  flex flex-col gap-2 flex-1">
+              <div class="flex flex-col gap-2 flex-1 text-black">
                 <strong class="text-xl">{{ juego.titulo }}</strong>
 
-                <div
-                  class="text-gray-600 text-sm grid grid-cols-2 "
-                >
+                <div class="text-black text-sm grid grid-cols-2 gap-2">
                   <div>
                     <span class="font-medium">Plataforma:</span>
                     {{ JSON.parse(juego.plataformas).join(", ") }}
@@ -71,16 +72,10 @@
         @click.self="cerrarModal"
       >
         <div
-          class="bg-white rounded-lg w-full max-w-md shadow-lg overflow-hidden transform transition-transform duration-200 scale-95 relative"
+          class=" bg-purple-300 text-white rounded-lg w-full max-w-md shadow-lg overflow-hidden transform transition-transform duration-200 scale-95 relative "
         >
-          <!-- Botón cerrar arriba a la derecha -->
-          <button
-            @click="cerrarModal"
-            class="absolute top-3 right-3 text-red-600 text-3xl font-bold hover:text-red-800 hover:scale-110 transition-all"
-            aria-label="Cerrar modal"
-          >
-            &times;
-          </button>
+          <!-- Botón cerrar -->
+          
 
           <!-- Imagen grande -->
           <div class="p-5">
