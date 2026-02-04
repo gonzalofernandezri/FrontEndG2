@@ -9,7 +9,7 @@
         <img
           src="../img/ElorrietaFest.png" 
           alt="logo"
-          class="h-28 w-auto max-w-none drop-shadow-[0_0_10px_rgba(168,85,247,0.5)]"        />
+          class="h-27 w-auto max-w-none drop-shadow-[0_0_10px_rgba(168,85,247,0.5)]"        />
         <img
           src="../img/ElorrietaTexto.png" 
           alt="Elorrieta Fest"
