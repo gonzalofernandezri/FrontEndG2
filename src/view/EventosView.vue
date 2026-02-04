@@ -1,5 +1,9 @@
 <template>
-    <div class="flex items-center justify-center grow bg-gray-100">    
+    <div class="flex items-center justify-center grow"> 
+      <video autoplay muted loop class="fixed top-0 left-0 w-full h-auto object-cover -z-10">
+        <source src="../../img/cod.mp4" type="video/mp4">
+        Tu navegador no soporta el video.
+      </video>   
       <div class="w-full max-w-6xl mx-auto p-6 flex flex-col items-center gap-6 pt-35">
         <div class="flex flex-col sm:flex-row gap-4 w-full">
           <select v-model="tipo" @change="cambiarFiltros"  class="border p-2 rounded flex-1">
