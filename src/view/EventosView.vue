@@ -55,33 +55,33 @@
               v-if="evento.imagen"
               :src="`/gamefest_resources/events/${evento.imagen}`"
               alt="Imagen del evento"
-              class="w-full h-48 object-cover"
+              class="w-full h-48 object-cover border-8 border-[#948efe]"
             />
 
             <!-- Datos -->
             <div class="p-4 flex flex-col gap-2 flex-1">
-              <strong class="text-xl">{{ evento.titulo }}</strong>
+              <strong class="text-xl font-bold text-white">{{ evento.titulo }}</strong>
 
               <div
                 class="text-gray-100 text-sm grid grid-cols-2 gap-x-4 gap-y-1"
               >
                 <div>
-                  <span class="font-medium font-blod text-black">Tipo:</span>
+                  <span class=" font-bold text-white">Tipo:</span>
                   {{ evento.tipo }}
                 </div>
                 <div>
-                  <span class="font-medium font-blod text-black"
+                  <span class=" font-bold text-white"
                     >Plazas libres:</span
                   >
                   {{ evento.plazasLibres }}
                 </div>
 
                 <div>
-                  <span class="font-medium font-blod text-black">Fecha:</span>
+                  <span class=" font-bold text-white">Fecha:</span>
                   {{ evento.fecha }}
                 </div>
                 <div>
-                  <span class="font-medium font-blod text-black">Hora:</span>
+                  <span class=" font-bold text-white">Hora:</span>
                   {{ evento.hora }}
                 </div>
               </div>
@@ -117,20 +117,6 @@
         <div
           class="bg-white rounded-lg w-full max-w-md shadow-lg overflow-hidden"
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-            class="size-6 text-green-500 top-4 right-4 ms-106"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-            />
-          </svg>
 
           <h2 class="text-2xl font-bold p-5">
             {{ eventoSeleccionado.titulo }}
