@@ -1,5 +1,5 @@
 <template>
-  <div class="flex items-center justify-center grow bg-white pt-30">
+  <div class="flex items-center justify-center grow bg-purple-200/40 pt-30">
     <div class="flex flex-col items-center min-h-screen p-4 mt-20 lg:mt-[5px]">
       <!-- Búsqueda -->
       <div class="w-full max-w-4xl mx-auto mb-4 md:mb-2 px-4">
@@ -29,7 +29,7 @@
           >
             <!-- TARJETA INTERIOR -->
             <div
-              class="rounded-lg overflow-hidden flex flex-col h-full min-h-[300px] p-2 bg-gradient-to-tr bg-gray-400 "
+              class="rounded-lg overflow-hidden flex flex-col h-full min-h-[300px] p-2 bg-gradient-to-tr bg-gray-600"
             >
               <!-- Imagen -->
               <img
@@ -40,10 +40,10 @@
               />
 
               <!-- Datos -->
-              <div class="flex flex-col gap-2 flex-1 text-white">
-                <strong class="text-xl">{{ juego.titulo }}</strong>
+              <div class="flex flex-col gap-2 flex-1 text-purple-700/50">
+                <strong class="text-xl text-white">{{ juego.titulo }}</strong>
 
-                <div class="text-white text-sm grid grid-cols-2 gap-2">
+                <div class="text-white font-blod  text-sm grid grid-cols-2 gap-2">
                   <div>
                     <span class="font-medium">Plataforma:</span>
                     {{ JSON.parse(juego.plataformas).join(", ") }}
