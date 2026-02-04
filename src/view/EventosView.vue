@@ -94,7 +94,7 @@
         <button
           @click="anteriorPagina"
           :disabled="paginaActual === 1"
-          class="bg-blue-500 text-white px-4 py-2 rounded disabled:bg-gray-300 disabled:text-gray-600 hover:bg-blue-300"
+          class="bg-blue-500/70 text-white px-4 py-2 rounded disabled:bg-gray-300 disabled:text-gray-600 hover:bg-blue-300"
         >
           Anterior
         </button>
@@ -102,7 +102,7 @@
         <button
           @click="siguientePagina"
           :disabled="paginaActual === totalPaginas"
-          class="bg-blue-500 text-white px-4 py-2 rounded disabled:bg-gray-300 disabled:text-gray-600 hover:bg-blue-700"
+          class="bg-blue-500/70 text-white px-4 py-2 rounded disabled:bg-gray-300 disabled:text-gray-600 hover:bg-blue-700"
         >
           Siguiente
         </button>
@@ -115,10 +115,10 @@
         @click.self="cerrarModal"
       >
         <div
-          class="bg-white rounded-lg w-full max-w-md shadow-lg overflow-hidden"
+          class="bg-[#948efe] rounded-lg w-full max-w-md shadow-lg overflow-hidden"
         >
 
-          <h2 class="text-2xl font-bold p-5">
+          <h2 class="text-2xl font-bold text-white p-5">
             {{ eventoSeleccionado.titulo }}
           </h2>
 
@@ -135,15 +135,15 @@
           <!-- Contenido del modal -->
           <div class="p-6 flex flex-col gap-4 p-5">
             <div class="text-sm text-gray-600 grid grid-cols-2 gap-2">
-              <div><strong>Tipo:</strong> {{ eventoSeleccionado.tipo }}</div>
-              <div>
+              <div class=" text-white"><strong>Tipo:</strong> {{ eventoSeleccionado.tipo }}</div>
+              <div class=" text-white">
                 <strong>Plazas:</strong> {{ eventoSeleccionado.plazasLibres }}
               </div>
-              <div><strong>Fecha:</strong> {{ eventoSeleccionado.fecha }}</div>
-              <div><strong>Hora:</strong> {{ eventoSeleccionado.hora }}</div>
+              <div class=" text-white"><strong>Fecha:</strong> {{ eventoSeleccionado.fecha }}</div>
+              <div class=" text-white"><strong>Hora:</strong> {{ eventoSeleccionado.hora }}</div>
             </div>
 
-            <p class="text-gray-700">
+            <p class="text-white">
               {{ eventoSeleccionado.descripcion }}
             </p>
 
@@ -151,14 +151,14 @@
               <button
                 @click="inscribirse"
                 :disabled="apuntado"
-                class="bg-blue-500 disabled:bg-gray-300 disabled:text-gray-600 text-white px-4 py-2 rounded hover:bg-blue-600"
+                class="bg-blue-500/70 disabled:bg-gray-300 disabled:text-gray-600 text-white px-4 py-2 rounded hover:bg-blue-600"
               >
                 Apuntarme
               </button>
 
               <button
                 @click="cerrarModal"
-                class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+                class="bg-blue-500/70 text-white px-4 py-2 rounded hover:bg-blue-600"
               >
                 Cerrar
               </button>
