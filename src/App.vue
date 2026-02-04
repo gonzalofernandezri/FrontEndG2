@@ -2,22 +2,22 @@
   <div class="flex min-h-screen w-screen">
     <div class="grow flex flex-col">
       <header class="w-full px-5 z-50">
-        <nav
-          class="fixed top-5 left-1/2 -translate-x-1/2 w-[calc(100%-40px)] shadow-xl shadow-purple-500/50  rounded-full p-5 flex flex-col md:flex-row items-center md:justify-between gap-2 md:gap-0"
-        >
-          <div class="flex flex-col sm:flex-row items-center gap-4 md:gap-5">
-            <router-link to="/principal">
-              <img
-                src="../img/ElorrietaFest.png"
-                alt="logo"
-                class="h-14 w-auto bg-white/10 rounded-md ml-12"
-              />
-            </router-link>
+<nav
+  class="fixed top-5 left-1/2 -translate-x-1/2 w-[calc(100%-35px)] h-24 shadow-xl shadow-purple-500/50 rounded-full px-8 flex items-center justify-between z-50 bg-black/20 backdrop-blur-md"
+>    <div class="flex items-center gap-4 ml-0 md:ml-12">
+      <router-link to="/principal" class="flex items-center gap-3">
+        <img
+          src="../img/ElorrietaFest.png" 
+          alt="logo"
+          class="h-28 w-auto max-w-none drop-shadow-[0_0_10px_rgba(168,85,247,0.5)]"        />
+        <img
+          src="../img/ElorrietaTexto.png" 
+          alt="Elorrieta Fest"
+          class="h-8 w-auto hidden sm:block" 
+        />
+      </router-link>
+    </div>
 
-            <h1 class="text-white text-2xl font-bold text-center md:text-left">
-              ElorrietaFest
-            </h1>
-          </div>
 
           <ol class="flex flex-wrap justify-center md:flex gap-4 md:gap-6 ">
             <li>
@@ -197,6 +197,9 @@ onMounted(ocultarLogin);
 </script>
 
 <style>
+
+
+
 .fondo {
   background-size: cover;
   background-position: center;
