@@ -196,9 +196,9 @@ async function ocultarLogin() {
     const res = await fetch("/api/perfil_api.php", {
       credentials: "include", // envía la cookie de sesión PHP
     });
-
+    
     const data = await res.json();
-
+    
     if (data.session && data.session.logged_in) {
       usuarioLogeado.value = true;
     } else {
