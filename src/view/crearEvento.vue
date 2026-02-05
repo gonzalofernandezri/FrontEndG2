@@ -5,7 +5,7 @@
         
         <h2 class="text-xl my-1">Crear Evento</h2><br>
 
-        <form @submit.prevent="registrarUsuario">
+        <form @submit.prevent="crearEvento">
           
           <div>
             <label>Título:</label><br>
@@ -55,10 +55,10 @@
           </div>
 
           <div>
-            <label>Imagen (URL):</label><br>
+            <label>Imagen:</label><br>
             <input
-              type="text"
-              v-model="imagen"
+              type="file"
+              @change="onFileChange"
               class="bg-transparent text-white placeholder-white border border-white rounded-md py-1 my-2 px-2 focus:outline-none focus:ring-2 focus:ring-white"
             />
           </div>
@@ -74,7 +74,6 @@
 
           <button
             type="submit"
-            @click="crearEvento"
             class="my-2 bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow"
           >
             Crear Evento
@@ -112,7 +111,13 @@ function mostrarAlerta(tituloMsg, tipoMsg = 'info') {
   })
 }
 
+function onFileChange(e) {
+  // e.target.files es un FileList, tomamos el primer archivo
+  imagen.value = e.target.files[0] || null;
+}
+
 async function crearEvento() {
+
   // 🔍 Validaciones
   if (!titulo.value) {
     mostrarAlerta('El título es obligatorio', 'error')
@@ -140,19 +145,28 @@ async function crearEvento() {
   }
 
   try {
+
+    // ✅ Crear FormData
+    const formData = new FormData()
+
+    formData.append('titulo', titulo.value)
+    formData.append('tipo', tipo.value)
+    formData.append('fecha', fecha.value)
+    formData.append('hora', hora.value)
+    formData.append('plazas', plazas.value)
+    formData.append('descripcion', descripcion.value)
+
+    // IMPORTANTE: imagen debe ser el archivo real
+    if (imagen.value) {
+      formData.append('imagen', imagen.value)
+    }
+
+    console.log(imagen.value)
+
     const res = await fetch('/api/crearEvento_api.php', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      credentials: 'include', // 👈 ENVÍA LA COOKIE DE SESIÓN
-      body: JSON.stringify({
-        titulo: titulo.value,
-        tipo: tipo.value,
-        fecha: fecha.value,
-        hora: hora.value,
-        plazas: plazas.value,
-        imagen: imagen.value,
-        descripcion: descripcion.value
-      })
+      credentials: 'include',
+      body: formData
     })
 
     const data = await res.json()
@@ -169,6 +183,7 @@ async function crearEvento() {
     mostrarAlerta('Error de conexión con el servidor', 'error')
   }
 }
+
 </script>
 
 
