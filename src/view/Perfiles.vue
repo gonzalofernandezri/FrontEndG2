@@ -1,24 +1,17 @@
 <template>
   <div class="flex items-center justify-center grow fondo py-10">
     
-
-    <!-- contenedor prinicipal -->
     <div
-    
       class="w-full max-w-6xl bg-gradient-to-r from-blue-500/80 to-purple-500/80 backdrop-blur-md rounded-2xl shadow-2xl p-8 text-white lg:mt-30 md:mt-30 mt-70">
       
-
       <h4 class="text-3xl md:text-4xl font-extrabold text-center mb-10 tracking-wide">
         ¡BIENVENIDO/A A ElorrietaFest!
       </h4>
 
-      <!-- grid principal -->
       <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
 
-        <!-- col izuqierda -->
         <div class="md:col-span-1 flex flex-col items-center gap-4">
 
-          <!-- si no esta logeuado -->
           <div v-if="!usuarioLogeado" class="text-center">
             <span>¿No tienes cuenta?</span>
             <router-link
@@ -28,10 +21,8 @@
             </router-link>
           </div>
 
-          <!-- perfil -->
           <div v-else class="flex flex-col items-center gap-3 text-center">
 
-            <!-- avatar -->
             <div class="w-20 h-20 rounded-full bg-white/30 flex items-center justify-center text-3xl font-bold">
               {{ usuario?.username.charAt(0).toUpperCase() }}
             </div>
@@ -65,14 +56,12 @@
           </div>
         </div>
 
-        <!-- col derecha -->
         <div class="md:col-span-2 flex flex-col">
 
           <h3 class="text-2xl font-bold mb-4">
             Mis eventos
           </h3>
 
-          <!--lista de eventos -->
           <ul
             v-if="eventos.length"
             class="bg-white/20 rounded-xl divide-y divide-white/20
@@ -114,7 +103,6 @@
         </div>
       </div>
 
-      <!-- modal -->
       <div
         v-if="eventoSeleccionado"
         class="fixed inset-0 bg-black/50 flex items-center justify-center z-50"
@@ -167,54 +155,55 @@
 </template>
 
 <script setup>
+import Swal from 'sweetalert2'; // Librería para alertas estéticas
+import { ref, onMounted } from "vue"; // Funciones reactivas y de ciclo de vida
 
-import Swal from 'sweetalert2';
+// --- Variables de Estado ---
+const roluser = ref(null); // Almacena el rol del usuario (ADMIN/USER)
+const eventos = ref([]) // Lista de eventos cargados desde el servidor
+const eventoSeleccionado = ref(null) // Evento activo en el modal
+const usuarioLogeado = ref(false); // Flag de estado de sesión
+const usuario = ref(null); // Objeto completo con datos del usuario
 
-  import { ref, onMounted } from "vue";
+// Función para recuperar datos del perfil del usuario logueado en PHP
+async function cargarUsuario() {
+  try {
+    const res = await fetch("api/perfil_api.php", {
+      credentials: "include" // Importante: Envía la cookie de sesión PHP
+    });
+    const data = await res.json();
 
-  const roluser = ref(null);
-  const eventos = ref([])
-  const eventoSeleccionado = ref(null)
-  const usuarioLogeado = ref(false);
-  const usuario = ref(null);
-
-  async function cargarUsuario() {
-    try {
-      const res = await fetch("api/perfil_api.php", {
-        credentials: "include" // <--- envía cookie PHP
-      });
-      const data = await res.json();
-
-      if (data.session && data.session.logged_in) {
-        usuarioLogeado.value = true;
-        usuario.value = data.session;
-        roluser.value = data.session.role; // ya sabemos el rol
-
-      } else {
-        usuarioLogeado.value = false;
-        usuario.value = null;
-        roluser.value = null;
-      }
-    } catch (err) {
-      console.error("Error cargando usuario:", err);
+    if (data.session && data.session.logged_in) {
+      usuarioLogeado.value = true;
+      usuario.value = data.session;
+      roluser.value = data.session.role;
+    } else {
       usuarioLogeado.value = false;
       usuario.value = null;
       roluser.value = null;
     }
-  }
-
-  function rol() {
-    if (usuario.value) {
-      roluser.value = usuario.value.role;
-    } else {
-      roluser.value = null;
+  } catch (err) {
+    console.error("Error cargando usuario:", err);
+    usuarioLogeado.value = false;
+    usuario.value = null;
+    roluser.value = null;
   }
 }
 
-  async function mostrarEventos() {
+// Función auxiliar para asignar el rol (complementaria a cargarUsuario)
+function rol() {
+  if (usuario.value) {
+    roluser.value = usuario.value.role;
+  } else {
+    roluser.value = null;
+  }
+}
+
+// Carga la lista de eventos en los que el usuario está inscrito
+async function mostrarEventos() {
   try {
     const res = await fetch('/api/eventosUsuario_api.php', {
-      credentials: 'include' // envía cookie PHP
+      credentials: 'include' // Mantiene la persistencia de la sesión
     });
     const data = await res.json();
     console.log(data)
@@ -224,50 +213,52 @@ import Swal from 'sweetalert2';
   }
 }
 
-  const abrirModal = (evento) => {  
-    eventoSeleccionado.value = evento
-  }
+// Manejo visual del Modal
+const abrirModal = (evento) => {  
+  eventoSeleccionado.value = evento
+}
 
-  const cerrarModal = () => {
-    eventoSeleccionado.value = null
-  }
+const cerrarModal = () => {
+  eventoSeleccionado.value = null
+}
 
-  async function desapuntar() {
-    if (!eventoSeleccionado.value) return;
+// Función para desvincular al usuario del evento seleccionado
+async function desapuntar() {
+  if (!eventoSeleccionado.value) return;
 
-    const event_id = eventoSeleccionado.value.id;
+  const event_id = eventoSeleccionado.value.id;
 
-    try {
-      // Solo pasamos el event_id; el backend toma user_id de la sesión
-      await fetch(`/api/desapuntar_api.php?event_id=${event_id}`, {
-        method: 'POST', // más seguro que GET
-        credentials: 'include' // envía la cookie de sesión PHP
-      });
-
-      // Actualizamos la lista de eventos y cerramos el modal
-      await mostrarEventos();
-      cerrarModal();
-
-    } catch (err) {
-      console.error("Error al desapuntar:", err);
-    }
-  }
-
-
-  async function cerrarSesion() {
   try {
-    await fetch("/api/logout.php", {
-      method: "POST",       // destruimos la sesión con POST
-      credentials: "include" // enviamos la cookie PHP
+    // Petición POST para eliminar la relación usuario-evento en la DB
+    await fetch(`/api/desapuntar_api.php?event_id=${event_id}`, {
+      method: 'POST',
+      credentials: 'include'
     });
 
-    // Limpiamos variables reactivas locales (opcional)
+    // Refresca la lista visual tras la eliminación
+    await mostrarEventos();
+    cerrarModal();
+
+  } catch (err) {
+    console.error("Error al desapuntar:", err);
+  }
+}
+
+// Finaliza la sesión en el servidor y limpia el estado local
+async function cerrarSesion() {
+  try {
+    await fetch("/api/logout.php", {
+      method: "POST",
+      credentials: "include"
+    });
+
+    // Reseteo de variables reactivas
     usuarioLogeado.value = false;
     usuario.value = null;
     roluser.value = null;
     eventos.value = [];
 
-    // Redirigimos al usuario a la página principal
+    // Redirección forzada para limpiar el estado de la aplicación
     window.location.href = "/principal";
 
   } catch (err) {
@@ -275,10 +266,12 @@ import Swal from 'sweetalert2';
   }
 }
 
-  onMounted(mostrarEventos)
-  onMounted(rol)
-  onMounted(cargarUsuario);
+// Ciclo de vida: Se ejecuta al cargar el componente
+onMounted(mostrarEventos)
+onMounted(rol)
+onMounted(cargarUsuario);
 
+//  para mostrar alertas estilizadas con SweetAlert2
 function mostrarAlerta(titulo, tipo) {
   return Swal.fire({
     title: titulo,
@@ -289,14 +282,4 @@ function mostrarAlerta(titulo, tipo) {
     confirmButtonText: 'Aceptar'
   });
 }
-
-
-
-  
-
-    
 </script>
-
-<style>
-
-</style>

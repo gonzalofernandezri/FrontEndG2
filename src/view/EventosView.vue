@@ -45,12 +45,10 @@
           :key="evento.id"
           class="bg-blue-500/70 p-5 rounded-xl shadow-md hover:shadow-xl transition-shadow duration-300"
         >
-          <!-- TARJETA INTERIOR -->
           <div
             @click="abrirModal(evento)"
             class="rounded-lg shadow-md overflow-hidden flex flex-col bg-purple-400/50 h-full min-h-[300px]"
           >
-            <!-- Imagen -->
             <img
               v-if="evento.imagen"
               :src="`/api/img/eventos/${evento.imagen}`"
@@ -58,7 +56,6 @@
               class="w-full h-48 object-cover border-8 border-[#948efe]"
             />
 
-            <!-- Datos -->
             <div class="p-4 flex flex-col gap-2 flex-1">
               <strong class="text-xl font-bold text-white">{{ evento.titulo }}</strong>
 
@@ -70,12 +67,9 @@
                   {{ evento.tipo }}
                 </div>
                 <div>
-                  <span class=" font-bold text-white"
-                    >Plazas libres:</span
-                  >
+                  <span class=" font-bold text-white">Plazas libres:</span>
                   {{ evento.plazasLibres }}
                 </div>
-
                 <div>
                   <span class=" font-bold text-white">Fecha:</span>
                   {{ evento.fecha }}
@@ -108,7 +102,6 @@
         </button>
       </div>
 
-      <!-- MODAL -->
       <div
         v-if="eventoSeleccionado"
         class="fixed inset-0 bg-black/90 flex items-center justify-center z-50"
@@ -117,12 +110,10 @@
         <div
           class="bg-[#948efe] rounded-lg w-full max-w-md shadow-lg overflow-hidden"
         >
-
           <h2 class="text-2xl font-bold text-white p-5">
             {{ eventoSeleccionado.titulo }}
           </h2>
 
-          <!-- Imagen del evento -->
           <div class="p-5">
             <img
               v-if="eventoSeleccionado.imagen"
@@ -132,7 +123,6 @@
             />
           </div>
 
-          <!-- Contenido del modal -->
           <div class="p-6 flex flex-col gap-4 p-5">
             <div class="text-sm text-gray-600 grid grid-cols-2 gap-2">
               <div class=" text-white"><strong>Tipo:</strong> {{ eventoSeleccionado.tipo }}</div>
@@ -173,65 +163,50 @@
 <script setup>
 import { ref, onMounted, watch } from "vue";
 
+// --- Variables de Estado y Configuración ---
 const eventos = ref([]);
 const tipo = ref("");
 const fecha = ref("");
 const soloConPlazas = ref(false);
-const apuntado = ref(false);
+const apuntado = ref(false); // Controla si el usuario ya está en el evento actual
 
 var paginaActual = 1;
 var totalPaginas = 2;
-const eventosPorPagina = 9;
+const eventosPorPagina = 9; // Límite de elementos por vista
 
+// Función para obtener el conteo total de eventos y calcular cuántas páginas existen
 async function calcularPaginas() {
   const params = new URLSearchParams();
-
-  if (tipo.value) {
-    params.append("tipo", tipo.value);
-  }
-
-  if (fecha.value) {
-    params.append("fecha", fecha.value);
-  }
-
-  if (soloConPlazas.value) {
-    params.append("plazas", "true");
-  }
+  if (tipo.value) params.append("tipo", tipo.value);
+  if (fecha.value) params.append("fecha", fecha.value);
+  if (soloConPlazas.value) params.append("plazas", "true");
 
   const res = await fetch(`/api/eventostodo_api.php?${params.toString()}`);
   const data = await res.json();
   totalPaginas = Math.ceil(Number(data) / eventosPorPagina);
 }
 
+// Función para cargar los eventos de la página y filtros actuales
 async function cargarEventos() {
   const params = new URLSearchParams();
-
-  if (tipo.value) {
-    params.append("tipo", tipo.value);
-  }
-
-  if (fecha.value) {
-    params.append("fecha", fecha.value);
-  }
-
-  if (soloConPlazas.value) {
-    params.append("plazas", "true");
-  }
-
+  if (tipo.value) params.append("tipo", tipo.value);
+  if (fecha.value) params.append("fecha", fecha.value);
+  if (soloConPlazas.value) params.append("plazas", "true");
   params.append("pagina", paginaActual);
 
   const res = await fetch(`/api/eventos_api.php?${params.toString()}`);
   const data = await res.json();
-
   eventos.value = data;
 }
 
+// Reinicia la paginación cuando se cambia un filtro
 function cambiarFiltros() {
   paginaActual = 1;
   calcularPaginas();
   cargarEventos();
 }
 
+// Navegación de páginas
 function siguientePagina() {
   if (paginaActual < totalPaginas) {
     paginaActual++;
@@ -245,11 +220,14 @@ function anteriorPagina() {
     cargarEventos();
   }
 }
+
+// Carga inicial al montar el componente
 onMounted(() => {
   cargarEventos();
   calcularPaginas();
 });
 
+// --- Lógica del Modal ---
 const eventoSeleccionado = ref(null);
 
 const abrirModal = (evento) => {
@@ -261,6 +239,7 @@ const cerrarModal = () => {
   apuntado.value = null;
 };
 
+// Envía la solicitud de inscripción al backend PHP
 async function inscribirse() {
   if (!eventoSeleccionado.value) return;
 
@@ -268,33 +247,33 @@ async function inscribirse() {
   const fechaHoy = new Date().toISOString().split("T")[0];
 
   try {
-    // Enviamos solo event_id y fecha por POST
-    
     const res = await fetch("/api/apuntarseEvento_api.php", {
-      
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      credentials: "include", // envía cookie PHP
+      credentials: "include", 
       body: new URLSearchParams({
         evento_id: eventoId,
         fecha: fechaHoy,
       }),
     });
 
+    // Tras inscribirse, comprueba el estado para bloquear el botón
     deshabilitarEvento();
   } catch (err) {
     console.error("Error inscribiéndose al evento:", err);
   }
 }
 
+// Watcher: Cada vez que cambia el evento del modal, verifica si el usuario ya está apuntado
 watch(eventoSeleccionado, (nuevoEvento) => {
   if (nuevoEvento) {
     deshabilitarEvento();
   } else {
-    apuntado.value = false; // resetear al cerrar
+    apuntado.value = false; 
   }
 });
 
+// Comprueba en la BD si existe ya una relación entre el usuario y este evento
 async function deshabilitarEvento() {
   const eventoId = eventoSeleccionado.value.id;
 
@@ -307,6 +286,7 @@ async function deshabilitarEvento() {
     });
 
     const data = await res.json();
+    // Ajusta la variable reactiva según la respuesta booleana del servidor
     apuntado.value = data.apuntado === true;
    
   } catch (err) {

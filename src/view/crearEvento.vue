@@ -24,25 +24,26 @@
               class="bg-transparent text-white placeholder-white border border-white rounded-md py-1 my-2 px-2 focus:outline-none focus:ring-2 focus:ring-white"
             />
           </div>
-    <div class="flex flex-row justify-center">
-          <div>
-            <label>Fecha:</label><br>
-            <input
-              type="date"
-              v-model="fecha"
-              class="bg-transparent text-white border border-white rounded-md py-1 my-2 px-2 focus:outline-none focus:ring-2 focus:ring-white"
-            />
-          </div>
-          
 
-          <div>
-            <label>Hora:</label><br>
-            <input
-              type="time"
-              v-model="hora"
-              class="bg-transparent text-white border border-white rounded-md py-1 my-2 px-2 focus:outline-none focus:ring-2 focus:ring-white"
-            />
-          </div></div>
+          <div class="flex flex-row justify-center">
+            <div>
+              <label>Fecha:</label><br>
+              <input
+                type="date"
+                v-model="fecha"
+                class="bg-transparent text-white border border-white rounded-md py-1 my-2 px-2 focus:outline-none focus:ring-2 focus:ring-white"
+              />
+            </div>
+
+            <div>
+              <label>Hora:</label><br>
+              <input
+                type="time"
+                v-model="hora"
+                class="bg-transparent text-white border border-white rounded-md py-1 my-2 px-2 focus:outline-none focus:ring-2 focus:ring-white"
+              />
+            </div>
+          </div>
 
           <div>
             <label>Plazas:</label><br>
@@ -88,19 +89,19 @@
 
 <script setup>
 import { ref } from 'vue'
-import Swal from 'sweetalert2'
+import Swal from 'sweetalert2' // Alertas estéticas
 
-// Estado (antes data())
+// --- Estado reactivo de los campos del formulario ---
 const titulo = ref('')
 const tipo = ref('')
 const fecha = ref('')
 const hora = ref('')
 const plazas = ref('')
-const imagen = ref('')
+const imagen = ref('') // Aquí guardaremos el objeto File de la imagen
 const descripcion = ref('')
-const createdby = ref(1)
+const createdby = ref(1) // ID del creador (por defecto 1 o extraído de sesión)
 
-// Métodos
+// Helper para mostrar mensajes de éxito o error
 function mostrarAlerta(tituloMsg, tipoMsg = 'info') {
   Swal.fire({
     title: tituloMsg,
@@ -111,14 +112,16 @@ function mostrarAlerta(tituloMsg, tipoMsg = 'info') {
   })
 }
 
+// Captura el archivo binario cuando el usuario selecciona una imagen
 function onFileChange(e) {
-  // e.target.files es un FileList, tomamos el primer archivo
+  // Accedemos al primer archivo de la lista seleccionada
   imagen.value = e.target.files[0] || null;
 }
 
+// Función principal para enviar el formulario al servidor
 async function crearEvento() {
 
-  // 🔍 Validaciones
+  // --- Validaciones preventivas antes de enviar ---
   if (!titulo.value) {
     mostrarAlerta('El título es obligatorio', 'error')
     return
@@ -145,10 +148,10 @@ async function crearEvento() {
   }
 
   try {
-
-    // ✅ Crear FormData
+    // ✅ FormData es necesario para enviar archivos (multipart/form-data)
     const formData = new FormData()
 
+    // Adjuntamos todos los campos de texto
     formData.append('titulo', titulo.value)
     formData.append('tipo', tipo.value)
     formData.append('fecha', fecha.value)
@@ -156,24 +159,23 @@ async function crearEvento() {
     formData.append('plazas', plazas.value)
     formData.append('descripcion', descripcion.value)
 
-    // IMPORTANTE: imagen debe ser el archivo real
+    // Si el usuario seleccionó una imagen, la adjuntamos al envío
     if (imagen.value) {
       formData.append('imagen', imagen.value)
     }
 
-    console.log(imagen.value)
-
+    // Petición POST al backend PHP
     const res = await fetch('/api/crearEvento_api.php', {
       method: 'POST',
-      credentials: 'include',
-      body: formData
+      credentials: 'include', // Para que el servidor reconozca la sesión del ADMIN
+      body: formData // Enviamos el objeto FormData directamente
     })
 
     const data = await res.json()
-    console.log(data)
 
     if (data.success) {
       mostrarAlerta('Evento creado correctamente', 'success')
+      // Aquí podrías resetear los campos o redirigir
     } else {
       mostrarAlerta(data.message || 'Error al crear el evento', 'error')
     }
@@ -185,6 +187,3 @@ async function crearEvento() {
 }
 
 </script>
-
-
-

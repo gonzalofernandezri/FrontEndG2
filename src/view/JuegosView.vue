@@ -7,7 +7,6 @@
   >
     <div class="w-full max-w-6xl flex flex-col items-center gap-6 lg:mt-1 md:mt-1  mt-40">
       
-      <!-- Filtros / búsqueda -->
       <div class="flex flex-col gap-4 w-[400px] lg:w-full md:w-[500px] ">
         <input
           type="text"
@@ -18,7 +17,6 @@
         />
       </div>
 
-      <!-- Lista de juegos -->
       <ul class="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         <li
           v-for="juego in juegos"
@@ -56,7 +54,6 @@
         </li>
       </ul>
 
-      <!-- Modal -->
       <div
         v-if="modalVisible"
         class="fixed inset-0 bg-black/90 flex items-center justify-center z-50"
@@ -107,35 +104,42 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 
-const juegos = ref([]);
-const busqueda = ref('');
-const modalVisible = ref(false);
-const juegoSeleccionado = ref(null);
+// --- Estado Reactivo ---
+const juegos = ref([]); // Almacena el array de juegos
+const busqueda = ref(''); // Término de búsqueda del usuario
+const modalVisible = ref(false); // Controla la visibilidad del modal
+const juegoSeleccionado = ref(null); // Juego que se muestra actualmente en el modal
 
+// Función para obtener todos los juegos al cargar el componente
 async function cargarJuegos() {
   const res = await fetch('/api/juegos_api.php');
   juegos.value = await res.json();
 }
 
+// Función de filtrado: Envía el término de búsqueda al servidor PHP
 async function juegosFiltrados() {
   const query = busqueda.value.trim();
   const res = await fetch(`/api/juegos_api.php?query=${encodeURIComponent(query)}`);
   juegos.value = await res.json();
 }
 
+// Lógica para abrir el modal con los datos del juego seleccionado
 function abrirModal(juego) {
   juegoSeleccionado.value = juego;
   modalVisible.value = true;
 }
 
+// Lógica para cerrar el modal y resetear la selección
 function cerrarModal() {
   modalVisible.value = false;
 }
 
+// Hook de ciclo de vida: Carga inicial de datos
 onMounted(cargarJuegos);
 </script>
 
 <style>
+/* Estilos para transiciones de tipo 'fade' (desvanecimiento) */
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.2s;
