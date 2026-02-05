@@ -1,7 +1,7 @@
 <template>
   <div class="flex items-center justify-center grow bg-gray-100 fondo">
     <div class="justify-center flex flex-col items-center space-y-4 "> 
-<div class="bg-gradient-to-r from-blue-400/50 to-purple-400/50 text-white size-100 font-black text-center rounded-lg border-black p-6 backdrop-blur-sm">
+<div class="bg-gradient-to-r from-blue-400/50 to-purple-400/50 text-white size-100 font-black text-center rounded-lg border-black p-6 backdrop-blur-sm  sm:mt-70">
 
         <h2 class="text-xl my-1">Inicio de Sesion</h2><br>
         <form @submit.prevent="">

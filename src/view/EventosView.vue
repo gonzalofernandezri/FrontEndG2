@@ -3,7 +3,7 @@
     <div
       class="w-full max-w-6xl mx-auto p-6 flex flex-col items-center gap-6 pt-35"
     >
-      <div class="flex flex-col sm:flex-row gap-4 w-full">
+      <div class="flex flex-col sm:flex-row gap-4 w-full lg:mt-10 md:mt-10 mt-50">
         <select
           v-model="tipo"
           @change="cambiarFiltros"
