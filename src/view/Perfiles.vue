@@ -1,11 +1,11 @@
 <template>
-  <div class="flex items-center justify-center grow fondo sm:py-10">
+  <div class="flex items-center justify-center grow fondo py-10">
     
 
     <!-- contenedor prinicipal -->
     <div
     
-      class="w-full max-w-6xl bg-gradient-to-r from-blue-500/80 to-purple-500/80 backdrop-blur-md rounded-2xl shadow-2xl p-8 text-white sm:mt-70">
+      class="w-full max-w-6xl bg-gradient-to-r from-blue-500/80 to-purple-500/80 backdrop-blur-md rounded-2xl shadow-2xl p-8 text-white lg:mt-30 md:mt-30 mt-70">
       
 
       <h4 class="text-3xl md:text-4xl font-extrabold text-center mb-10 tracking-wide">
