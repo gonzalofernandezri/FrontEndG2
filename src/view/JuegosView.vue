@@ -34,7 +34,7 @@
               <!-- Imagen -->
               <img
                 v-if="juego.imagen"
-                :src="'../../gamefest_resources/games/' + juego.imagen"
+                :src="'/api/img/juegos/' + juego.imagen"
                 :alt="'Imagen de ' + juego.titulo"
                 class="w-full h-50 object-cover rounded-lg mb-2  "
               />
@@ -82,7 +82,7 @@
             <img
               v-if="juegoSeleccionado"
               :src="
-                '../../gamefest_resources/games/' + juegoSeleccionado.imagen
+                '/api/img/juegos/' + juegoSeleccionado.imagen
               "
               :alt="juegoSeleccionado.titulo"
               class="w-full h-64 object-cover rounded-lg"
