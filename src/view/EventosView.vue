@@ -53,7 +53,7 @@
             <!-- Imagen -->
             <img
               v-if="evento.imagen"
-              :src="`/gamefest_resources/events/${evento.imagen}`"
+              :src="`/api/img/eventos/${evento.imagen}`"
               alt="Imagen del evento"
               class="w-full h-48 object-cover border-8 border-[#948efe]"
             />
@@ -126,7 +126,7 @@
           <div class="p-5">
             <img
               v-if="eventoSeleccionado.imagen"
-              :src="`/gamefest_resources/events/${eventoSeleccionado.imagen}`"
+              :src="`/api/img/eventos/${eventoSeleccionado.imagen}`"
               alt="Imagen del evento"
               class="w-full h-48 object-cover rounded-lg"
             />

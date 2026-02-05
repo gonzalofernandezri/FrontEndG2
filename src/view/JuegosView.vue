@@ -30,7 +30,7 @@
             <div class="w-full h-48 bg-gray-300">
               <img
                 v-if="juego.imagen"
-                :src="'../../gamefest_resources/games/' + juego.imagen"
+                :src="'/api/img/juegos/' + juego.imagen"
                 :alt="juego.titulo"
                 class="w-full h-48 object-cover border-8 border-[#948efe]"
               />
@@ -69,7 +69,7 @@
             <div class="w-full h-48 bg-gray-300 rounded-lg overflow-hidden">
               <img
                 v-if="juegoSeleccionado?.imagen"
-                :src="'../../gamefest_resources/games/' + juegoSeleccionado.imagen"
+                :src="'/api/img/juegos/' + juegoSeleccionado.imagen"
                 :alt="juegoSeleccionado.titulo"
                 class="w-full h-48 object-cover"
               />
