@@ -29,7 +29,7 @@
 
           <!-- MENU -->
           <ol
-            class="flex flex-col md:flex-row items-center justify-center w-full md:w-auto gap-2 md:gap-6"
+            class="flex flex-col md:flex flex-row items-center justify-center w-full md:w-auto gap-2 md:gap-6 "
           >
             <li>
               <router-link
